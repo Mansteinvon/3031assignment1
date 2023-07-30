@@ -1,4 +1,4 @@
-package ca.yorku.eecs;
+package Handler;
 
 import java.io.*;
 import java.net.*;
@@ -9,6 +9,11 @@ import com.sun.net.httpserver.*;
 
 
 public class Handler implements HttpHandler{
+	private HttpHandler next;
+	
+	public Handler(HttpHandler next) {
+		this.next=next;
+	}
 
 	
 	
