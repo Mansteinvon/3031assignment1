@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import com.sun.net.httpserver.*;
 
-import Handler.*;
+
 
 public class App 
 {
@@ -13,7 +13,7 @@ public class App
     {
     	
         HttpServer server = HttpServer.create(new InetSocketAddress("0.0.0.0", PORT), 0);
-        HttpHandler init = new postHandler(new getHandler(null));
+        HttpHandler init = new Handler();
         server.createContext("/api/v1/", init::handle);
         
         
