@@ -110,9 +110,40 @@ public class Neo4j {
 	}
 	
 	public boolean addRelationship(String movieid,String actorid) {
+		//System.out.println("At least");
+		
+		System.out.println(movieid+actorid);
+		
+		String search="MATCH (a:Actor {actorId : $id1})-[r]->(m : Movie {movieId : $id2}) RETURN r";
+
+		Value params = Values.parameters("id1",actorid,"id2",movieid);
+		
+		String create="MATCH (a: Actor), (m: Movie) WHERE a.actorId = $id1 AND m.movieId = $id2 CREATE (a)-[r:ACTED_IN]->(m)";
+		
 		try (Session session = driver.session()) {
-			
-			String search="";
+			try(Transaction tx = session.beginTransaction()){
+				
+				StatementResult result=tx.run(search,params);
+				
+				if(result.hasNext()) {
+					//System.out.println(result.);
+					
+					session.close();
+					return false;
+				
+				}
+				
+				
+				
+				try(Session ses = driver.session()){
+					System.out.println("I am here");
+					ses.writeTransaction(tn -> tn.run(create,params));
+					ses.close();
+					return true;
+					
+					
+				}
+			}
 			
 			
 			
