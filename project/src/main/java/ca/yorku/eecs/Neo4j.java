@@ -109,67 +109,78 @@ public class Neo4j {
 	}
 	}
 	
-	public boolean addRelationship(String movieid,String actorid) {
+	public boolean addRelationship(String actorid,String movieid) {
 		//System.out.println("At least");
 		
 		System.out.println(movieid+actorid);
 		
-		String search="MATCH (a:Actor {actorId : $id1})-[r]->(m : Movie {movieId : $id2}) RETURN r";
-
 		Value params = Values.parameters("id1",actorid,"id2",movieid);
 		
 		String create="MATCH (a: Actor), (m: Movie) WHERE a.actorId = $id1 AND m.movieId = $id2 CREATE (a)-[r:ACTED_IN]->(m)";
 		
-		try (Session session = driver.session()) {
-			try(Transaction tx = session.beginTransaction()){
+		
+		boolean exist=exist(actorid,movieid);
 				
-				StatementResult result=tx.run(search,params);
 				
-				if(result.hasNext()) {
-					//System.out.println(result.);
+			//System.out.println(exist);
+				
+				if(!exist) {
 					
-					session.close();
-					return false;
-				
-				}
-				
-				
-				
-				try(Session ses = driver.session()){
+					try(Session ses = driver.session()){
 					System.out.println("I am here");
 					ses.writeTransaction(tn -> tn.run(create,params));
 					ses.close();
-					return true;
+					
 					
 					
 				}
+				}
+				
+				
+				return !exist;
+				
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+		
+		
+		
+		
+	}
+	
+	
+	public boolean exist(String actorid,String movieid){
+		String search=String.format("RETURN EXISTS( (:Actor {actorId: \"%s\"})-[:ACTED_IN]-(:Movie {movieId: \"%s\"}) ) as bool",actorid,movieid);
+		
+		try (Session session = driver.session()) {
+			try(Transaction tx = session.beginTransaction()){
+				
+				StatementResult result=tx.run(search);
+				boolean exist=result.next().get(0).asBoolean();
+				return exist;
+				
 			}
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
 		}
-		
-		
-		
-	}
-	
+				
 	
 	
 	}
+}
 
 	
