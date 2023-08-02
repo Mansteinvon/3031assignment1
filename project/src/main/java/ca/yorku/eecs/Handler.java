@@ -17,7 +17,7 @@ public  class Handler implements HttpHandler{
 	
 	private final String re1="/api/v1/addActor";
 	private final String re2="/api/v1/addMovie";
-	private final String re3="/addRelationship";
+	private final String re3="/api/v1/addRelationship";
 	private final String re4="/addactor";
 	private final String re5="/addactor";
 	private final String re6="/addactor";
@@ -106,8 +106,9 @@ public void handlePut(HttpExchange request)throws IOException{
       
       
       else if(path.equals(re3)) {
-    	  //neo4j.addRelationship(json.getString("actorId"),json.getString("movieId"));
-    	  System.out.println("unimplemented");
+    	  if(neo4j.addRelationship(json.getString("actorId"),json.getString("movieId")))
+    		  result=succeed(request,"relationship added");
+    	  //System.out.println("unimplemented");
      
       
       }

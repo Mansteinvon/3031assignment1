@@ -109,6 +109,34 @@ public class Neo4j {
 	}
 	}
 	
+	public boolean addRelationship(String movieid,String actorid) {
+		try (Session session = driver.session()) {
+			
+			String search="";
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+		}
+		
+		
+		
+	}
+	
 	
 	
 	}
