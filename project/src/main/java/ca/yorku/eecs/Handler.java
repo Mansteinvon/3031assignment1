@@ -16,7 +16,7 @@ import  org.json.*;
 public  class Handler implements HttpHandler{
 	
 	private final String re1="/api/v1/addActor";
-	private final String re2="/addMovie";
+	private final String re2="/api/v1/addMovie";
 	private final String re3="/addRelationship";
 	private final String re4="/addactor";
 	private final String re5="/addactor";
@@ -76,22 +76,44 @@ public  class Handler implements HttpHandler{
 	
 public void handlePut(HttpExchange request)throws IOException{
 	
+	boolean result = false;
+	
+	
+	
 	
 	Neo4j neo4j=new Neo4j();
      
       String path = request.getRequestURI().getPath();
-     // System.out.println(path);
+    
       
       try {
     	  JSONObject json = new JSONObject( Utils.getBody(request));
-      if(path.equals(re1))
-    	  neo4j.addActor(json.getString("name"),json.getString("actorId"));
+    	 
+      if(path.equals(re1)) {
+    	  if(neo4j.addActor(json.getString("name"),json.getString("actorId")))
+        		result=succeed(request,"Actor added");
+      
+      }
+      
       else if(path.equals(re2))
-    	  //neo4j.addMovie(json.getString("name"),json.getString("movieId"));
-    	  System.out.println("unimplemented");
-      else if(path.equals(re3))
+    	  
+      {
+    	  if(neo4j.addMovie(json.getString("name"),json.getString("movieId"),json.getString("rating")))
+    		  result=succeed(request,"Movies added");
+      
+      }
+      
+      
+      
+      else if(path.equals(re3)) {
     	  //neo4j.addRelationship(json.getString("actorId"),json.getString("movieId"));
     	  System.out.println("unimplemented");
+     
+      
+      }
+      
+      
+      
       else 
     	  sendString(request, "handle put\n", 501);
       
@@ -99,10 +121,33 @@ public void handlePut(HttpExchange request)throws IOException{
 	}
       catch(JSONException e)
       {
-    	  sendString(request,"BAD REQUEST",400);
+    	  sendString(request,"cannot understand json",400);
+    	  return;
       }
+      
+    
+      if(!result)
+           edgeCase(request,"edge cased, not added");
     	  
       }
+
+
+
+public boolean succeed(HttpExchange request,String info)throws IOException{
+	
+		
+		sendString(request,info,200);
+		return true;
+	
+	 
+}
+
+
+
+public void edgeCase(HttpExchange request,String info)throws IOException {
+	
+		sendString(request,info,400);
+	}
 	
 	
 	
@@ -113,6 +158,8 @@ public void handlePut(HttpExchange request)throws IOException{
 	
 	
 	
+	
+
 	
 
 }
