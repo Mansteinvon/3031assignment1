@@ -1,7 +1,12 @@
 package ca.yorku.eecs;
 
+import java.util.*;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.neo4j.driver.v1.*;
+import org.neo4j.driver.v1.Record;
 
 public class Neo4j {
 	private Driver driver;
@@ -23,23 +28,11 @@ public class Neo4j {
 	
 	public boolean addActor(String name,String Id) {
 		
-		try (Session session = driver.session()) {
-	        String query = "Match (a:Actor) WHERE a.actorId = $id RETURN a";
+		
 	        String create = "CREATE (n:Actor {name:$name, actorId: $id})";
 
-	        // Parameters for the Cypher query to check node existence
-	        Value params = Values.parameters("id", Id);
-
-	        // Execute the query to check node existence
-	        StatementResult node_boolean = session.writeTransaction(tx -> tx.run(query, params));
-
-	        if (node_boolean.hasNext()) {
-	        	System.out.println("it is already here");
-	        	session.close();
-	        	
-	            // Node with the given ID already exists
-	            return false;
-	        } 
+	        if(hasActor(Id))
+	        	return false;
 		
 	        
 	        
@@ -54,7 +47,7 @@ public class Neo4j {
 	        
 		}
 
-		}
+		
 	
 	
 	public boolean addMovie(String name,String movieId,String rating) {
@@ -63,23 +56,12 @@ public class Neo4j {
 		
 		
 
-		try (Session session = driver.session()) {
-	        String query = "MATCH (n:Movie) WHERE n.movieId = $id RETURN n";
+		
 	        String create = "CREATE (a:Movie {name: $name, movieId: $id, rating: $rate})";
 
-	        // Parameters for the Cypher query to check node existence
-	        Value params = Values.parameters("id", movieId);
-
-	        // Execute the query to check node existence
-	        StatementResult node_boolean = session.writeTransaction(tx -> tx.run(query, params));
-
-	        if (node_boolean.hasNext()) {
-	            // Node with the given ID already exists
-	        	System.out.println("it is already here");
-	        	session.close();
-	        	
-	            return false;
-	        } 
+	        
+	        if(hasMovie(movieId))
+	        	return false;
 
 		
 		
@@ -107,7 +89,7 @@ public class Neo4j {
 		
 		
 	}
-	}
+	
 	
 	public boolean addRelationship(String actorid,String movieid) {
 		//System.out.println("At least");
@@ -180,6 +162,187 @@ public class Neo4j {
 				
 	
 	
+	}
+	
+	public JSONObject RetrieveActor(String actorId) {
+		String querry="MATCH (n:Actor) WHERE n.actorId = $id RETURN n.name";
+		
+		
+		
+		Value params = Values.parameters("id", actorId);
+		
+		try(Session ses=driver.session()){
+			StatementResult node = ses.writeTransaction(tx -> tx.run(querry, params));
+			
+			
+			String name=node.next().get(0).asString();
+			
+			
+			JSONArray movies = findMovie(actorId);
+			
+		
+			JSONObject obj = new JSONObject();
+			
+			try {
+				obj.put("name",name);
+				obj.put("actorId",actorId);
+				obj.put("movies",movies);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return obj;
+		}
+		
+		
+		
+		
+		
+	}
+	
+	
+	
+	
+	
+		
+		
+	public JSONArray findMovie(String actorId){
+		
+		String search="MATCH (:Actor {actorId: $id})-[:ACTED_IN]->(m:Movie)return m.movieId";
+		Value params = Values.parameters("id", actorId);
+		List<String>list = new ArrayList<>();
+		try(Session ses = driver.session()){
+			StatementResult result=ses.writeTransaction(tx -> tx.run(search,params));
+			Record record;
+			while(result.hasNext()) {
+				record=result.next();
+				list.add(record.get(0).asString());
+			}
+			
+			/*
+			Record[]records=(Record[]) result.stream().toArray();
+			for(int i=0;i<records.length;i++)
+				System.out.println(records[i]);
+			//System.out.println(list);
+			 * 
+			 */
+			JSONArray arr = new JSONArray(list);
+		
+		
+		return arr;
+		
+	}
+		
+	}
+		
+	
+	
+	public JSONArray findActor(String movieId) {
+		
+		
+
+		String search="MATCH (a:Actor)-[:ACTED_IN]->(m:Movie{movieId: $id})return a.actorId";
+		Value params = Values.parameters("id", movieId);
+		List<String>list = new ArrayList<>();
+		try(Session ses = driver.session()){
+			StatementResult result=ses.writeTransaction(tx -> tx.run(search,params));
+			Record record;
+			while(result.hasNext()) {
+				record=result.next();
+				list.add(record.get(0).asString());
+			}
+			
+			/*
+			Record[]records=(Record[]) result.stream().toArray();
+			for(int i=0;i<records.length;i++)
+				System.out.println(records[i]);
+			//System.out.println(list);
+			 * 
+			 * 
+			 */
+			JSONArray arr = new JSONArray(list);
+		
+		     return arr;
+		//return list.toString();
+		
+	}
+		
+	}
+	
+	
+	public JSONObject RetrieveMovie(String movieId){
+String querry="MATCH (n:Movie) WHERE n.movieId = $id RETURN n.name";
+		
+		
+		
+		Value params = Values.parameters("id", movieId);
+		
+		try(Session ses=driver.session()){
+			StatementResult node = ses.writeTransaction(tx -> tx.run(querry, params));
+			
+			
+			String name=node.next().get(0).asString();
+			Map<String,String> map = new HashMap<>();
+			List<String> movie= new ArrayList<>();
+			JSONArray movies = findActor(movieId);
+			
+			
+			JSONObject obj = new JSONObject(map);
+			
+			try {
+				obj.put("name",name);
+				obj.put("movieId",movieId);
+				obj.put("actors",movies);
+			} catch (JSONException e) {
+				
+				e.printStackTrace();
+			}
+			
+			
+			return obj;
+		}
+		
+		
+		
+		
+		
+		
+	}
+	
+	
+	
+	public boolean hasActor(String actorId) {
+		String query = "MATCH (n:Actor) WHERE n.actorId = $id RETURN n";
+		
+		
+		 Value params = Values.parameters("id", actorId);
+		try (Session session = driver.session()) {
+			
+			StatementResult node_boolean = session.writeTransaction(tx -> tx.run(query, params));
+			
+			return node_boolean.hasNext();
+		}
+		
+		
+		
+		
+	}
+	
+	public boolean hasMovie(String movieId) {
+		 String query = "MATCH (n:Movie) WHERE n.movieId = $id RETURN n";
+		 Value params = Values.parameters("id", movieId);
+			try (Session session = driver.session()) {
+				
+				StatementResult node_boolean = session.writeTransaction(tx -> tx.run(query, params));
+				
+				return node_boolean.hasNext();
+			}
+			
+		
+		
+		
+		
+		
 	}
 }
 

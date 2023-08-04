@@ -18,12 +18,12 @@ public  class Handler implements HttpHandler{
 	private final String re1="/api/v1/addActor";
 	private final String re2="/api/v1/addMovie";
 	private final String re3="/api/v1/addRelationship";
-	private final String re4="/addactor";
-	private final String re5="/addactor";
-	private final String re6="/addactor";
-	private final String re7="/addactor";
-	private final String re8="/addactor";
-	private final String re9="/addactor";
+	private final String re4="/api/v1/getActor";
+	private final String re5="/api/v1/getMovie";
+	private final String re6="/api/v1/hasRelationship";
+	private final String re7="/api/v1/computeBaconNumber";
+	private final String re8="/api/v1/computeBaconPath";
+	private final String re9="/api/v1/getRating";
 	
 	
 	
@@ -49,10 +49,10 @@ public  class Handler implements HttpHandler{
 	@Override
 	public void handle(HttpExchange request) throws IOException{
 		try {
-            if (request.getRequestMethod().equals("GET")) {
+            if (request.getRequestMethod().equals("GET")) 
                 handleGet(request);
-                System.out.println("get");
-            } else if(request.getRequestMethod().equals("PUT"))
+               
+             else if(request.getRequestMethod().equals("PUT"))
             	handlePut(request);
             /*else
             	sendString(request, "Unimplemented method\n", 501);
@@ -70,7 +70,59 @@ public  class Handler implements HttpHandler{
 	
 	
 	
-	public void handleGet(HttpExchange request) {
+	public void handleGet(HttpExchange request)throws IOException {
+		boolean result =false;
+		Neo4j neo4j = new Neo4j();
+		String path= request.getRequestURI().getPath();
+		//System.out.println(path);
+		//System.out.println((request.getRequestURI().getQuery()));
+		 Map<String, String> map = Utils.splitQuery(request.getRequestURI().getQuery());
+		
+		 
+		 if(path.equals(re4))
+		 {
+			 String id = map.get("actorId");
+			 if(id==null)
+				 result=false;
+			 else if(!(neo4j.hasActor(id)))
+				 result=notFound(request);
+			 else
+			 {
+			     String res=neo4j.RetrieveActor(id).toString();
+			     
+			     result=succeed(request,res);
+			 }
+		 }
+		 else if(path.equals(re5)) {
+			 
+			 
+			 String id = map.get("movieId");
+			 if(id==null)
+				 result=false;
+			 else if(!(neo4j.hasMovie(id)))
+				 result=notFound(request);
+			 else
+			 {
+			     String res=neo4j.RetrieveMovie(id).toString();
+			     
+			     result=succeed(request,res);
+			 }
+			 
+		 }
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 if(!(result))
+			 edgeCase(request,"formatted error");
+		
+		
+		
 		
 	}
 	
@@ -106,7 +158,11 @@ public void handlePut(HttpExchange request)throws IOException{
       
       
       else if(path.equals(re3)) {
-    	  if(neo4j.addRelationship(json.getString("actorId"),json.getString("movieId")))
+    	  if(!(neo4j.hasActor(json.getString("actorId"))&&neo4j.hasMovie(json.getString("movieId"))))
+    		  result=notFound(request);
+    	  
+    	  
+      else if(neo4j.addRelationship(json.getString("actorId"),json.getString("movieId")))
     		  result=succeed(request,"relationship added");
     	  //System.out.println("unimplemented");
      
@@ -145,13 +201,19 @@ public boolean succeed(HttpExchange request,String info)throws IOException{
 
 
 
+
+
+
 public void edgeCase(HttpExchange request,String info)throws IOException {
 	
 		sendString(request,info,400);
 	}
 	
 	
-	
+	public boolean notFound(HttpExchange request)throws IOException{
+		sendString(request,"Not found what u look for",404);
+		return true;
+	}
 	
 	
 	
