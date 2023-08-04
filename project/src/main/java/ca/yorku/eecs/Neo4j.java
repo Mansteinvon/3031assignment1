@@ -178,7 +178,7 @@ public class Neo4j {
 			String name=node.next().get(0).asString();
 			
 			
-			JSONArray movies = findMovie(actorId);
+			JSONArray movies = new JSONArray(findMovie(actorId));
 			
 		
 			JSONObject obj = new JSONObject();
@@ -206,7 +206,7 @@ public class Neo4j {
 	
 		
 		
-	public JSONArray findMovie(String actorId){
+	public List<String> findMovie(String actorId){
 		
 		String search="MATCH (:Actor {actorId: $id})-[:ACTED_IN]->(m:Movie)return m.movieId";
 		Value params = Values.parameters("id", actorId);
@@ -226,10 +226,10 @@ public class Neo4j {
 			//System.out.println(list);
 			 * 
 			 */
-			JSONArray arr = new JSONArray(list);
+			//JSONArray arr = new JSONArray(list);
 		
 		
-		return arr;
+		return list;
 		
 	}
 		
@@ -237,7 +237,7 @@ public class Neo4j {
 		
 	
 	
-	public JSONArray findActor(String movieId) {
+	public List<String> findActor(String movieId) {
 		
 		
 
@@ -260,9 +260,9 @@ public class Neo4j {
 			 * 
 			 * 
 			 */
-			JSONArray arr = new JSONArray(list);
+			//JSONArray arr = new JSONArray(list);
 		
-		     return arr;
+		     return list;
 		//return list.toString();
 		
 	}
@@ -284,7 +284,7 @@ String querry="MATCH (n:Movie) WHERE n.movieId = $id RETURN n.name";
 			String name=node.next().get(0).asString();
 			Map<String,String> map = new HashMap<>();
 			List<String> movie= new ArrayList<>();
-			JSONArray movies = findActor(movieId);
+			JSONArray movies = new JSONArray(findActor(movieId));
 			
 			
 			JSONObject obj = new JSONObject(map);
@@ -343,6 +343,58 @@ String querry="MATCH (n:Movie) WHERE n.movieId = $id RETURN n.name";
 		
 		
 		
+	}
+	
+	public JSONObject getRelationship(String actor, String movie) {
+		String actedIn = String.valueOf(exist(actor, movie));
+		Map<String, String> relationship = new HashMap<>();
+		relationship.put("actorId", actor);
+		relationship.put("movieId", movie);
+		relationship.put("hasRelationship", actedIn);
+		return new JSONObject(relationship);
+	}
+
+	public List<String> getArrayParam(String id) {
+		if(hasMovie(id))
+			return findActor(id);
+		else
+			return findMovie(id);
+	}
+	
+	public List<String> computeBaconPath(String actor)	{
+		HashSet<String> visited = new HashSet<>();
+		LinkedList<String> queue = new LinkedList<>();
+		HashMap<String, String> parentNodes = new HashMap<>();
+		queue.addLast(actor);
+		boolean foundBacon = false;
+		
+		while(!queue.isEmpty() && !foundBacon) {
+			String node = queue.removeFirst();
+			if(!visited.contains(node)) {
+				visited.add(node);
+				List<String> connectedNodes = getArrayParam(node);
+				for(String s : connectedNodes) {
+					queue.addLast(s);
+					parentNodes.put(s, node);
+					if(s.equals("nm0000102"))
+						foundBacon = true;
+				}
+			}
+		}
+		
+		if(foundBacon) {
+			LinkedList<String> path = new LinkedList<>();
+			path.addFirst("nm0000102");
+			while(!path.getFirst().equals(actor))
+				path.addFirst(parentNodes.get(path.getFirst()));
+			return path;
+		}
+		else
+			return null;
+	}
+	
+	public int computeBaconNumber(String actor) {
+		return computeBaconPath(actor).size() / 2;
 	}
 }
 

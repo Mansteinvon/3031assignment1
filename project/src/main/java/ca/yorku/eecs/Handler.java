@@ -109,7 +109,38 @@ public  class Handler implements HttpHandler{
 			 }
 			 
 		 }
-		 
+		 else if(path.equals(re6)) {
+			 String actor = map.get("actorId");
+			 String movie = map.get("movieId");
+			 if(actor == null)
+				 edgeCase(request, "missing actor parameter");
+			 if(movie == null)
+				 edgeCase(request, "missing movie parameter");
+			 if(!neo4j.hasActor(actor) || !neo4j.hasMovie(movie))
+				 notFound(request);
+			 else {
+				 succeed(request, neo4j.getRelationship(actor, movie).toString());
+			 }
+		 }
+		 else if(path.equals(re7)) {
+			 String actor = map.get("actorId");
+			 if(actor == null)
+				 edgeCase(request, "missing actor parameter");
+			 if (!neo4j.hasActor(actor))
+				 notFound(request);
+			 else
+				 succeed(request, String.valueOf(neo4j.computeBaconNumber(actor)));
+		 }
+		 else if(path.equals(re8)) {
+			 String actor = map.get("actorId");
+			 if(actor == null)
+				 edgeCase(request, "missing actor parameter");
+			 if (!neo4j.hasActor(actor))
+				 notFound(request);
+			 else
+				 succeed(request, neo4j.computeBaconPath(actor).toString());
+		 }
+			 
 		 
 		 
 		 
