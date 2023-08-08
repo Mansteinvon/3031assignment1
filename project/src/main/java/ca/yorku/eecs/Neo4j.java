@@ -374,6 +374,8 @@ String querry="MATCH (n:Movie) WHERE n.movieId = $id RETURN n.name";
 				visited.add(node);
 				List<String> connectedNodes = getArrayParam(node);
 				for(String s : connectedNodes) {
+					if(visited.contains(s))
+						continue;
 					queue.addLast(s);
 					parentNodes.put(s, node);
 					if(s.equals("nm0000102"))
@@ -383,8 +385,11 @@ String querry="MATCH (n:Movie) WHERE n.movieId = $id RETURN n.name";
 		}
 		
 		if(foundBacon) {
+			
+			System.out.println("Found Kevin");
 			LinkedList<String> path = new LinkedList<>();
 			path.addFirst("nm0000102");
+			System.out.println(parentNodes);
 			while(!path.getFirst().equals(actor))
 				path.addFirst(parentNodes.get(path.getFirst()));
 			return path;
