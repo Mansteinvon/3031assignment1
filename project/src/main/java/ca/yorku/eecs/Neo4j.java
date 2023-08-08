@@ -347,11 +347,18 @@ String querry="MATCH (n:Movie) WHERE n.movieId = $id RETURN n.name";
 	
 	public JSONObject getRelationship(String actor, String movie) {
 		String actedIn = String.valueOf(exist(actor, movie));
-		Map<String, String> relationship = new HashMap<>();
-		relationship.put("actorId", actor);
-		relationship.put("movieId", movie);
-		relationship.put("hasRelationship", actedIn);
-		return new JSONObject(relationship);
+		JSONObject jsn = new JSONObject();
+		
+		try {
+			jsn.put("actorId", actor);
+			jsn.put("movieId", movie);
+			jsn.put("hasRelationship", actedIn);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return jsn;
 	}
 
 	public List<String> getArrayParam(String id) {
@@ -361,10 +368,11 @@ String querry="MATCH (n:Movie) WHERE n.movieId = $id RETURN n.name";
 			return findMovie(id);
 	}
 	
-	public List<String> computeBaconPath(String actor)	{
+	public JSONObject computeBaconPath(String actor)	{
 		HashSet<String> visited = new HashSet<>();
 		LinkedList<String> queue = new LinkedList<>();
 		HashMap<String, String> parentNodes = new HashMap<>();
+		JSONObject jsn = new JSONObject();
 		queue.addLast(actor);
 		boolean foundBacon = false;
 		
@@ -384,22 +392,51 @@ String querry="MATCH (n:Movie) WHERE n.movieId = $id RETURN n.name";
 			}
 		}
 		
+		
+		
+		
 		if(foundBacon) {
 			
-			System.out.println("Found Kevin");
+			
 			LinkedList<String> path = new LinkedList<>();
 			path.addFirst("nm0000102");
-			System.out.println(parentNodes);
+			
 			while(!path.getFirst().equals(actor))
 				path.addFirst(parentNodes.get(path.getFirst()));
-			return path;
+			
+			
+			JSONArray jarr= new JSONArray(path);
+			try {
+				jsn.put("baconPath", jarr);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+			return jsn;
 		}
 		else
 			return null;
 	}
 	
-	public int computeBaconNumber(String actor) {
-		return computeBaconPath(actor).size() / 2;
+	public JSONObject computeBaconNumber(String actor) {
+		
+		JSONObject jsn = computeBaconPath(actor);
+		if(jsn==null)
+			return null;
+		JSONObject returns = new JSONObject();
+		
+		try {
+			JSONArray arr = (JSONArray)jsn.get("baconPath");
+			int length=arr.length()-1;
+			returns.put("baconNumber", length);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return returns;
 	}
 }
 

@@ -112,33 +112,42 @@ public  class Handler implements HttpHandler{
 		 else if(path.equals(re6)) {
 			 String actor = map.get("actorId");
 			 String movie = map.get("movieId");
-			 if(actor == null)
-				 edgeCase(request, "missing actor parameter");
-			 if(movie == null)
-				 edgeCase(request, "missing movie parameter");
-			 if(!neo4j.hasActor(actor) || !neo4j.hasMovie(movie))
-				 notFound(request);
+			 if(actor == null||movie==null)
+				 result=false;
+				
+			
+			 else if(!neo4j.hasActor(actor) || !neo4j.hasMovie(movie))
+				 result=notFound(request);
 			 else {
-				 succeed(request, neo4j.getRelationship(actor, movie).toString());
+				 result=succeed(request, neo4j.getRelationship(actor, movie).toString());
 			 }
-		 }
-		 else if(path.equals(re7)) {
-			 String actor = map.get("actorId");
-			 if(actor == null)
-				 edgeCase(request, "missing actor parameter");
-			 if (!neo4j.hasActor(actor))
-				 notFound(request);
-			 else
-				 succeed(request, String.valueOf(neo4j.computeBaconNumber(actor)));
 		 }
 		 else if(path.equals(re8)) {
 			 String actor = map.get("actorId");
+			 JSONObject jsn= neo4j.computeBaconPath(actor);
+			
 			 if(actor == null)
-				 edgeCase(request, "missing actor parameter");
-			 if (!neo4j.hasActor(actor))
-				 notFound(request);
+				 result=false;
+			 
+			
+			 else if (!neo4j.hasActor(actor)||jsn==null)
+				 result=notFound(request);
+			 else 
+				 
+				 
+				 result=succeed(request, jsn.toString());
+		 }
+		 else if(path.equals(re7)) {
+			 String actor = map.get("actorId");
+			 JSONObject jsn= neo4j.computeBaconNumber(actor);
+			 if(actor == null)
+				result=false;
+			 
+			
+			 else if (!neo4j.hasActor(actor)||jsn==null)
+				 result=notFound(request);
 			 else
-				 succeed(request, neo4j.computeBaconPath(actor).toString());
+				 result=succeed(request, jsn.toString());
 		 }
 			 
 		 
