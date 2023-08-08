@@ -23,7 +23,7 @@ public  class Handler implements HttpHandler{
 	private final String re6="/api/v1/hasRelationship";
 	private final String re7="/api/v1/computeBaconNumber";
 	private final String re8="/api/v1/computeBaconPath";
-	private final String re9="/api/v1/getRating";
+	private final String re9="/api/v1/getaboveRating";
 	
 	
 	

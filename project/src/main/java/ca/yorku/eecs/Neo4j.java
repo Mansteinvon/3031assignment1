@@ -407,7 +407,7 @@ String querry="MATCH (n:Movie) WHERE n.movieId = $id RETURN n.name";
 		HashMap<String, String> parentNodes = new HashMap<>();
 		JSONObject jsn = new JSONObject();
 		queue.addLast(actor);
-		boolean foundBacon = false;
+		boolean foundBacon = actor.equals("nm0000102");
 		
 		while(!queue.isEmpty() && !foundBacon) {
 			String node = queue.removeFirst();
@@ -462,7 +462,7 @@ String querry="MATCH (n:Movie) WHERE n.movieId = $id RETURN n.name";
 		
 		try {
 			JSONArray arr = (JSONArray)jsn.get("baconPath");
-			int length=arr.length()-1;
+			int length=arr.length()/2;
 			returns.put("baconNumber", length);
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
