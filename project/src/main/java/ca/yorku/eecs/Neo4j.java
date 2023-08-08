@@ -272,7 +272,7 @@ public class Neo4j {
 	
 	public JSONObject RetrieveMovie(String movieId){
 String querry="MATCH (n:Movie) WHERE n.movieId = $id RETURN n.name";
-		
+
 		
 		
 		Value params = Values.parameters("id", movieId);
@@ -282,17 +282,24 @@ String querry="MATCH (n:Movie) WHERE n.movieId = $id RETURN n.name";
 			
 			
 			String name=node.next().get(0).asString();
-			Map<String,String> map = new HashMap<>();
-			List<String> movie= new ArrayList<>();
+			
+			
+			
+			
+			
+			String rating=getRating(movieId);
+			
+			
 			JSONArray movies = new JSONArray(findActor(movieId));
 			
 			
-			JSONObject obj = new JSONObject(map);
+			JSONObject obj = new JSONObject();
 			
 			try {
 				obj.put("name",name);
 				obj.put("movieId",movieId);
 				obj.put("actors",movies);
+				obj.put("Rating", rating);
 			} catch (JSONException e) {
 				
 				e.printStackTrace();
@@ -301,10 +308,36 @@ String querry="MATCH (n:Movie) WHERE n.movieId = $id RETURN n.name";
 			
 			return obj;
 		}
+			
+			
 		
 		
 		
 		
+		
+		
+		
+	}
+	
+	
+	
+	private String getRating(String movieId) {
+		String another = "MATCH (n:Movie) WHERE n.movieId = $id RETURN n.rating";		
+		
+		try(Session se=driver.session()){
+			
+			Value params = Values.parameters("id", movieId);
+			
+			
+           StatementResult node =se.writeTransaction(tx -> tx.run(another, params));
+			
+			String rating = node.next().get(0).asString();
+			
+			
+			
+			
+			return rating;
+		}
 		
 		
 	}
