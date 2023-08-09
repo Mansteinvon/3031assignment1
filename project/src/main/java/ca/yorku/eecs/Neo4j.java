@@ -50,7 +50,7 @@ public class Neo4j {
 		
 	
 	
-	public boolean addMovie(String name,String movieId,String rating) {
+	public boolean addMovie(String name,String movieId,double rating) {
 		
 		
 		
@@ -470,6 +470,45 @@ String querry="MATCH (n:Movie) WHERE n.movieId = $id RETURN n.name";
 		}
 		
 		return returns;
+	}
+	
+	
+	
+	public JSONObject getAbove(double rating) {
+		
+		String querry ="MATCH (m : Movie) WHERE m.rating >=$rating RETURN m.name";
+		JSONObject jsn = new JSONObject();
+		Value params= Values.parameters("rating",rating);
+		List<String>list = new ArrayList<>();
+		
+		try(Session ses = driver.session()){
+			
+			
+			StatementResult result=ses.writeTransaction(tx -> tx.run(querry,params));
+			Record record;
+			while(result.hasNext()) {
+				record=result.next();
+				list.add(record.get(0).asString());
+			}
+			JSONArray arr=new JSONArray(list);
+			try {
+				jsn.put("Movies above " +rating, arr);
+				
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			return jsn;
+			
+		}
+				
+				
+				
+				
+				
+				
+				
 	}
 }
 

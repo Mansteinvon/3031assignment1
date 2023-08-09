@@ -149,6 +149,32 @@ public  class Handler implements HttpHandler{
 			 else
 				 result=succeed(request, jsn.toString());
 		 }
+		 
+		 
+		 else if(path.equals(re9)) {
+			 String Rating=map.get("rating");
+			 System.out.println(Rating);
+			 if(Rating==null)
+				 result=false;
+			 else {
+				 
+				 try {
+				 double value =Double.parseDouble(Rating);
+				 
+				 if(value>5.0||value<0)
+					 result=false;
+				 else {
+				 
+				JSONObject jsn = neo4j.getAbove(value);
+				result=succeed(request,jsn.toString());
+			 }
+				 }
+			 catch(NumberFormatException e) {
+				 
+			 }
+			 
+		 }
+		 }
 			 
 		 
 		 
@@ -189,8 +215,21 @@ public void handlePut(HttpExchange request)throws IOException{
       
       else if(path.equals(re2))
     	  
+    	  
+    	
+    	  
       {
-    	  if(neo4j.addMovie(json.getString("name"),json.getString("movieId"),json.getString("rating")))
+    	  String name = json.getString("name");
+    	  String id = json.getString("movieId");
+    	  String rate = json.getString("rating");
+    	  
+    	  
+    		  double value = Double.parseDouble(rate);
+    	  
+    	  if(value<0 ||value>5)
+    		  result=false;
+    	  
+    	  else if(neo4j.addMovie(name,id,value))
     		  result=succeed(request,"Movies added");
       
       }
@@ -219,6 +258,10 @@ public void handlePut(HttpExchange request)throws IOException{
       catch(JSONException e)
       {
     	  sendString(request,"cannot understand json",400);
+    	  return;
+      }
+      catch(NumberFormatException e) {
+    	  sendString(request,"value enter is not numerical value",400);
     	  return;
       }
       
