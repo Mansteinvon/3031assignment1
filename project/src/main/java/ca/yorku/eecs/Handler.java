@@ -23,7 +23,8 @@ public  class Handler implements HttpHandler{
 	private final String re6="/api/v1/hasRelationship";
 	private final String re7="/api/v1/computeBaconNumber";
 	private final String re8="/api/v1/computeBaconPath";
-	private final String re9="/api/v1/getaboveRating";
+	private final String re9="/api/v1/getAboveRating";
+	private final String reX="/api/v1/setRating";
 	
 	
 	
@@ -221,15 +222,9 @@ public void handlePut(HttpExchange request)throws IOException{
       {
     	  String name = json.getString("name");
     	  String id = json.getString("movieId");
-    	  String rate = json.getString("rating");
+    	 
     	  
-    	  
-    		  double value = Double.parseDouble(rate);
-    	  
-    	  if(value<0 ||value>5)
-    		  result=false;
-    	  
-    	  else if(neo4j.addMovie(name,id,value))
+    	  if(neo4j.addMovie(name,id))
     		  result=succeed(request,"Movies added");
       
       }
@@ -243,6 +238,21 @@ public void handlePut(HttpExchange request)throws IOException{
     	  
       else if(neo4j.addRelationship(json.getString("actorId"),json.getString("movieId")))
     		  result=succeed(request,"relationship added");
+    	  //System.out.println("unimplemented");
+     
+      
+      }
+      
+      else if(path.equals(reX)) {
+    	  String rating = json.getString("rating");
+    	  Double value=Double.parseDouble(rating);
+    	  if(!(neo4j.hasMovie(json.getString("movieId"))))
+    		  result=notFound(request);
+    	  
+    	  else if(value>5||value<0)
+    		  result=false;
+          else if(neo4j.setRating(json.getString("movieId"),value))
+    		  result=succeed(request,"rating added");
     	  //System.out.println("unimplemented");
      
       

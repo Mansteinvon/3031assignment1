@@ -50,14 +50,14 @@ public class Neo4j {
 		
 	
 	
-	public boolean addMovie(String name,String movieId,double rating) {
+	public boolean addMovie(String name,String movieId) {
 		
 		
 		
 		
 
 		
-	        String create = "CREATE (a:Movie {name: $name, movieId: $id, rating: $rate})";
+	        String create = "CREATE (a:Movie {name: $name, movieId: $id})";
 
 	        
 	        if(hasMovie(movieId))
@@ -70,7 +70,7 @@ public class Neo4j {
 		try(Session newone=driver.session()){
 		
 	            // Node with the given ID does not exist, create a new node
-	            Value param = Values.parameters("name", name, "id", movieId, "rate", rating);
+	            Value param = Values.parameters("name", name, "id", movieId);
 	            
 	        
 	            newone.writeTransaction(tx -> tx.run(create, param));
@@ -287,7 +287,7 @@ String querry="MATCH (n:Movie) WHERE n.movieId = $id RETURN n.name";
 			
 			
 			
-			String rating=getRating(movieId);
+			//String rating=getRating(movieId);
 			
 			
 			JSONArray movies = new JSONArray(findActor(movieId));
@@ -299,7 +299,7 @@ String querry="MATCH (n:Movie) WHERE n.movieId = $id RETURN n.name";
 				obj.put("name",name);
 				obj.put("movieId",movieId);
 				obj.put("actors",movies);
-				obj.put("Rating", rating);
+				//obj.put("Rating", rating);
 			} catch (JSONException e) {
 				
 				e.printStackTrace();
@@ -338,9 +338,35 @@ String querry="MATCH (n:Movie) WHERE n.movieId = $id RETURN n.name";
 			
 			return rating;
 		}
-		
-		
 	}
+		
+		
+		
+		public boolean setRating(String movieId,double rating) {
+			
+			String another = "MATCH (n :Movie {movieId: $id}) SET n.rating = $rating";	
+			System.out.println(movieId+rating);
+			
+			try(Session se=driver.session()){
+				
+				Value params = Values.parameters("id", movieId,"rating",rating);
+				
+				
+	           StatementResult node =se.writeTransaction(tx -> tx.run(another, params));
+				
+				
+				
+				
+				se.close();
+				
+				return true;
+				
+			}
+			
+		}
+		
+		
+	
 	
 	
 	
