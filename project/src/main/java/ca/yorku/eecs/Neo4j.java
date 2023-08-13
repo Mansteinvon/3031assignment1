@@ -29,7 +29,7 @@ public class Neo4j {
 	public boolean addActor(String name,String Id) {
 		
 		
-	        String create = "CREATE (n:Actor {name:$name, actorId: $id})";
+	        String create = "CREATE (n:Actor {name:$name, id: $id})";
 
 	        if(hasActor(Id))
 	        	return false;
@@ -57,7 +57,7 @@ public class Neo4j {
 		
 
 		
-	        String create = "CREATE (a:Movie {name: $name, movieId: $id})";
+	        String create = "CREATE (a:Movie {name: $name, id: $id})";
 
 	        
 	        if(hasMovie(movieId))
@@ -98,7 +98,7 @@ public class Neo4j {
 		
 		Value params = Values.parameters("id1",actorid,"id2",movieid);
 		
-		String create="MATCH (a: Actor), (m: Movie) WHERE a.actorId = $id1 AND m.movieId = $id2 CREATE (a)-[r:ACTED_IN]->(m)";
+		String create="MATCH (a: Actor), (m: Movie) WHERE a.id = $id1 AND m.id = $id2 CREATE (a)-[r:ACTED_IN]->(m)";
 		
 		
 		boolean exist=exist(actorid,movieid);
@@ -148,7 +148,7 @@ public class Neo4j {
 	
 	
 	public boolean exist(String actorid,String movieid){
-		String search=String.format("RETURN EXISTS( (:Actor {actorId: \"%s\"})-[:ACTED_IN]-(:Movie {movieId: \"%s\"}) ) as bool",actorid,movieid);
+		String search=String.format("RETURN EXISTS( (:Actor {id: \"%s\"})-[:ACTED_IN]-(:Movie {id: \"%s\"}) ) as bool",actorid,movieid);
 		
 		try (Session session = driver.session()) {
 			try(Transaction tx = session.beginTransaction()){
@@ -165,7 +165,7 @@ public class Neo4j {
 	}
 	
 	public JSONObject RetrieveActor(String actorId) {
-		String querry="MATCH (n:Actor) WHERE n.actorId = $id RETURN n.name";
+		String querry="MATCH (n:Actor) WHERE n.id = $id RETURN n.name";
 		
 		
 		
@@ -208,7 +208,7 @@ public class Neo4j {
 		
 	public List<String> findMovie(String actorId){
 		
-		String search="MATCH (:Actor {actorId: $id})-[:ACTED_IN]->(m:Movie)return m.movieId";
+		String search="MATCH (:Actor {id: $id})-[:ACTED_IN]->(m:Movie)return m.id";
 		Value params = Values.parameters("id", actorId);
 		List<String>list = new ArrayList<>();
 		try(Session ses = driver.session()){
@@ -241,7 +241,7 @@ public class Neo4j {
 		
 		
 
-		String search="MATCH (a:Actor)-[:ACTED_IN]->(m:Movie{movieId: $id})return a.actorId";
+		String search="MATCH (a:Actor)-[:ACTED_IN]->(m:Movie{id: $id})return a.id";
 		Value params = Values.parameters("id", movieId);
 		List<String>list = new ArrayList<>();
 		try(Session ses = driver.session()){
@@ -271,7 +271,7 @@ public class Neo4j {
 	
 	
 	public JSONObject RetrieveMovie(String movieId){
-String querry="MATCH (n:Movie) WHERE n.movieId = $id RETURN n.name";
+String querry="MATCH (n:Movie) WHERE n.id = $id RETURN n.name";
 
 		
 		
@@ -322,7 +322,7 @@ String querry="MATCH (n:Movie) WHERE n.movieId = $id RETURN n.name";
 	
 	
 	private String getRating(String movieId) {
-		String another = "MATCH (n:Movie) WHERE n.movieId = $id RETURN n.rating";		
+		String another = "MATCH (n:Movie) WHERE n.id = $id RETURN n.rating";		
 		
 		try(Session se=driver.session()){
 			
@@ -344,8 +344,8 @@ String querry="MATCH (n:Movie) WHERE n.movieId = $id RETURN n.name";
 		
 		public boolean setRating(String movieId,double rating) {
 			
-			String another = "MATCH (n :Movie {movieId: $id}) SET n.rating = $rating";	
-			System.out.println(movieId+rating);
+			String another = "MATCH (n :Movie {id: $id}) SET n.rating = $rating";	
+			//System.out.println(movieId+rating);
 			
 			try(Session se=driver.session()){
 				
@@ -371,7 +371,7 @@ String querry="MATCH (n:Movie) WHERE n.movieId = $id RETURN n.name";
 	
 	
 	public boolean hasActor(String actorId) {
-		String query = "MATCH (n:Actor) WHERE n.actorId = $id RETURN n";
+		String query = "MATCH (n:Actor) WHERE n.id = $id RETURN n";
 		
 		
 		 Value params = Values.parameters("id", actorId);
@@ -388,7 +388,7 @@ String querry="MATCH (n:Movie) WHERE n.movieId = $id RETURN n.name";
 	}
 	
 	public boolean hasMovie(String movieId) {
-		 String query = "MATCH (n:Movie) WHERE n.movieId = $id RETURN n";
+		 String query = "MATCH (n:Movie) WHERE n.id = $id RETURN n";
 		 Value params = Values.parameters("id", movieId);
 			try (Session session = driver.session()) {
 				
