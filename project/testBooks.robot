@@ -288,5 +288,101 @@ computeBaconNumberFail
 
     ${hugo_weaving_actor_id}=    Set Variable    HW11
 
-    ${compute_bacon_number_resp}=    GET On Session    localhost    url=/api/v1/computeBaconNumber?actorId=${actor_hugo_weaving}    headers=${headers}    expected_status=404
+    ${compute_bacon_number_resp}=    GET On Session    localhost    url=/api/v1/computeBaconNumber?actorId=${hugo_weaving_actor_id}    headers=${headers}    expected_status=404
+
+
+computeBaconPathPass
+    ${headers}=    Create Dictionary    Content-Type=application/json
+    ${actor_kevin_bacon}=    Create Dictionary    name=Kevin Bacon    actorId=nm0000102
+    ${actor_keanu_reeves}=    Create Dictionary    name=Keanu Reeves    actorId=KR1
+    ${actor_al_pacino}=    Create Dictionary    name=Al Pacino    actorId=AP1
+    ${actor_hugo_weaving}=    Create Dictionary    name=Hugo Weaving    actorId=HW1
+
+
+    ${actor_kevin_bacon_resp}=    PUT On Session    localhost    /api/v1/addActor    json=${actor_kevin_bacon}    headers=${headers}    expected_status=200
+    ${actor_keanu_reeves_resp}=    PUT On Session    localhost    /api/v1/addActor    json=${actor_keanu_reeves}    headers=${headers}    expected_status=200
+    ${actor_al_pacino_resp}=    PUT On Session    localhost    /api/v1/addActor    json=${actor_al_pacino}    headers=${headers}    expected_status=200
+    ${actor_hugo_weaving_resp}=    PUT On Session    localhost    /api/v1/addActor    json=${actor_hugo_weaving}    headers=${headers}    expected_status=200
+
+    ${movie_few_good_men}=    Create Dictionary    name=A Few Good Men    movieId=TFGB1
+    ${movie_the_devils_advocate}=    Create Dictionary    name=The Devil's Advocate    movieId=TDAT1
+    ${movie_the_matrix}=    Create Dictionary    name=The Matrix    movieId=MTRX1
+
+    ${movie_few_good_men_resp}=    PUT On Session    localhost    /api/v1/addMovie    json=${movie_few_good_men}    headers=${headers}    expected_status=200
+    ${movie_the_devils_advocate_resp}=    PUT On Session    localhost    /api/v1/addMovie    json=${movie_the_devils_advocate}    headers=${headers}    expected_status=200
+    ${movie_the_matrix_resp}=    PUT On Session    localhost    /api/v1/addMovie    json=${movie_the_matrix}    headers=${headers}    expected_status=200
+
+
+    ${kevin_bacon_few_good_men_relationship_data}=    Create Dictionary    actorId=nm0000102    movieId=TFGB1
+    ${al_pacino_few_good_men_relationship_data}=    Create Dictionary    actorId=AP1    movieId=TFGB1
+    ${al_pacino_the_devils_advocate_relationship_data}=    Create Dictionary    actorId=AP1    movieId=TDAT1
+    ${keanu_reeves_the_devils_advocate_relationship_data}=    Create Dictionary    actorId=KR1    movieId=TDAT1
+    ${keanu_reeves_the_matrix_relationship_data}=    Create Dictionary    actorId=KR1    movieId=MTRX1
+    ${hugo_weaving_the_matrix_relationship_data}=    Create Dictionary    actorId=HW1    movieId=MTRX1
+
+
+
+    ${kevin_bacon_few_good_men_relationship_resp}=    PUT On Session    localhost    /api/v1/addRelationship    json=${kevin_bacon_few_good_men_relationship_data}    headers=${headers}    expected_status=200
+    ${al_pacino_few_good_men_relationship_resp}=    PUT On Session    localhost    /api/v1/addRelationship    json=${al_pacino_few_good_men_relationship_data}    headers=${headers}    expected_status=200
+    ${al_pacino_the_devils_advocate_relationship_resp}=    PUT On Session    localhost    /api/v1/addRelationship    json=${al_pacino_the_devils_advocate_relationship_data}    headers=${headers}    expected_status=200
+    ${keanu_reeves_the_devils_advocate_relationship_resp}=    PUT On Session    localhost    /api/v1/addRelationship    json=${keanu_reeves_the_devils_advocate_relationship_data}    headers=${headers}    expected_status=200
+    ${keanu_reeves_the_matrix_relationship_resp}=    PUT On Session    localhost    /api/v1/addRelationship    json=${keanu_reeves_the_matrix_relationship_data}    headers=${headers}    expected_status=200
+    ${hugo_weaving_the_matrix_relationship_resp}=    PUT On Session    localhost    /api/v1/addRelationship    json=${hugo_weaving_the_matrix_relationship_data}    headers=${headers}    expected_status=200
+
+    ${hugo_weaving_actor_id}=    Set Variable    HW1
+    
+    ${compute_bacon_path_resp}=    GET On Session    localhost    url=/api/v1/computeBaconPath?actorId=${hugo_weaving_actor_id}    headers=${headers}    expected_status=200
+    Log To Console    ${compute_bacon_path_resp.json()}
+
+
+    ${bacon_path}=    Set Variable    ${compute_bacon_path_resp.json()['baconPath']}
+
+    Should Be Equal As Strings    ${bacon_path}    ['HW1', 'MTRX1', 'KR1', 'TDAT1', 'AP1', 'TFGB1', 'nm0000102']
+
+computeBaconPathFail
+    ${headers}=    Create Dictionary    Content-Type=application/json
+    ${actor_kevin_bacon}=    Create Dictionary    name=Kevin Bacon    actorId=nm0000102
+    ${actor_keanu_reeves}=    Create Dictionary    name=Keanu Reeves    actorId=KR1
+    ${actor_al_pacino}=    Create Dictionary    name=Al Pacino    actorId=AP1
+    ${actor_hugo_weaving}=    Create Dictionary    name=Hugo Weaving    actorId=HW1
+
+
+    ${actor_kevin_bacon_resp}=    PUT On Session    localhost    /api/v1/addActor    json=${actor_kevin_bacon}    headers=${headers}    expected_status=200
+    ${actor_keanu_reeves_resp}=    PUT On Session    localhost    /api/v1/addActor    json=${actor_keanu_reeves}    headers=${headers}    expected_status=200
+    ${actor_al_pacino_resp}=    PUT On Session    localhost    /api/v1/addActor    json=${actor_al_pacino}    headers=${headers}    expected_status=200
+    ${actor_hugo_weaving_resp}=    PUT On Session    localhost    /api/v1/addActor    json=${actor_hugo_weaving}    headers=${headers}    expected_status=200
+
+    ${movie_few_good_men}=    Create Dictionary    name=A Few Good Men    movieId=TFGB1
+    ${movie_the_devils_advocate}=    Create Dictionary    name=The Devil's Advocate    movieId=TDAT1
+    ${movie_the_matrix}=    Create Dictionary    name=The Matrix    movieId=MTRX1
+
+    ${movie_few_good_men_resp}=    PUT On Session    localhost    /api/v1/addMovie    json=${movie_few_good_men}    headers=${headers}    expected_status=200
+    ${movie_the_devils_advocate_resp}=    PUT On Session    localhost    /api/v1/addMovie    json=${movie_the_devils_advocate}    headers=${headers}    expected_status=200
+    ${movie_the_matrix_resp}=    PUT On Session    localhost    /api/v1/addMovie    json=${movie_the_matrix}    headers=${headers}    expected_status=200
+
+
+    ${kevin_bacon_few_good_men_relationship_data}=    Create Dictionary    actorId=nm0000102    movieId=TFGB1
+    ${al_pacino_few_good_men_relationship_data}=    Create Dictionary    actorId=AP1    movieId=TFGB1
+    ${al_pacino_the_devils_advocate_relationship_data}=    Create Dictionary    actorId=AP1    movieId=TDAT1
+    ${keanu_reeves_the_devils_advocate_relationship_data}=    Create Dictionary    actorId=KR1    movieId=TDAT1
+    ${keanu_reeves_the_matrix_relationship_data}=    Create Dictionary    actorId=KR1    movieId=MTRX1
+    ${hugo_weaving_the_matrix_relationship_data}=    Create Dictionary    actorId=HW1    movieId=MTRX1
+
+
+
+    ${kevin_bacon_few_good_men_relationship_resp}=    PUT On Session    localhost    /api/v1/addRelationship    json=${kevin_bacon_few_good_men_relationship_data}    headers=${headers}    expected_status=200
+    ${al_pacino_few_good_men_relationship_resp}=    PUT On Session    localhost    /api/v1/addRelationship    json=${al_pacino_few_good_men_relationship_data}    headers=${headers}    expected_status=200
+    ${al_pacino_the_devils_advocate_relationship_resp}=    PUT On Session    localhost    /api/v1/addRelationship    json=${al_pacino_the_devils_advocate_relationship_data}    headers=${headers}    expected_status=200
+    ${keanu_reeves_the_devils_advocate_relationship_resp}=    PUT On Session    localhost    /api/v1/addRelationship    json=${keanu_reeves_the_devils_advocate_relationship_data}    headers=${headers}    expected_status=200
+    ${keanu_reeves_the_matrix_relationship_resp}=    PUT On Session    localhost    /api/v1/addRelationship    json=${keanu_reeves_the_matrix_relationship_data}    headers=${headers}    expected_status=200
+    ${hugo_weaving_the_matrix_relationship_resp}=    PUT On Session    localhost    /api/v1/addRelationship    json=${hugo_weaving_the_matrix_relationship_data}    headers=${headers}    expected_status=200
+
+    ${hugo_weaving_actor_id}=    Set Variable    HW11
+    
+    ${compute_bacon_path_resp}=    GET On Session    localhost    url=/api/v1/computeBaconPath?actorId=${hugo_weaving_actor_id}    headers=${headers}    expected_status=404
+ 
+
+
+
+
 
