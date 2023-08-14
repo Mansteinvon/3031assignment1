@@ -380,9 +380,66 @@ computeBaconPathFail
     ${hugo_weaving_actor_id}=    Set Variable    HW11
     
     ${compute_bacon_path_resp}=    GET On Session    localhost    url=/api/v1/computeBaconPath?actorId=${hugo_weaving_actor_id}    headers=${headers}    expected_status=404
- 
+
+
+setRatingPass
+    ${headers}=    Create Dictionary    Content-Type=application/json
+    ${movie_data}=    Create Dictionary    name=Cars    movieId=CRS1
+
+    ${movie_resp}=    PUT On Session    localhost    /api/v1/addMovie    json=${movie_data}    headers=${headers}    expected_status=200
+
+    ${rating}=    Create Dictionary    rating=4    movieId=CRS1
+
+    ${rating_resp}=    PUT On Session    localhost    /api/v1/setRating    json=${rating}    headers=${headers}    expected_status=200
+
+
+setRatingFail
+    ${headers}=    Create Dictionary    Content-Type=application/json
+    ${movie_data}=    Create Dictionary    name=Cars    movieId=CRS1
+
+    ${movie_resp}=    PUT On Session    localhost    /api/v1/addMovie    json=${movie_data}    headers=${headers}    expected_status=200
+
+    ${rating}=    Create Dictionary    rating=4    movieIdentification=CRS1
+
+    ${rating_resp}=    PUT On Session    localhost    /api/v1/setRating    json=${rating}    headers=${headers}    expected_status=400
+
+getAbovePass
+    ${headers}=    Create Dictionary    Content-Type=application/json
+    ${movie_data1}=    Create Dictionary    name=Cars    movieId=CRS1
+    ${movie_resp1}=    PUT On Session    localhost    /api/v1/addMovie    json=${movie_data1}    headers=${headers}    expected_status=200
+    ${rating1}=    Create Dictionary    rating=4    movieId=CRS1
+
+    ${movie_data2}=    Create Dictionary    name=Toy Story    movieId=TSY1
+    ${movie_resp2}=    PUT On Session    localhost    /api/v1/addMovie    json=${movie_data2}    headers=${headers}    expected_status=200
+    ${rating2}=    Create Dictionary    rating=5    movieId=TSY1
+
+    ${rating_resp}=    PUT On Session    localhost    /api/v1/setRating    json=${rating1}    headers=${headers}    expected_status=200
+    ${rating_resp2}=    PUT On Session    localhost    /api/v1/setRating    json=${rating2}    headers=${headers}    expected_status=200
 
 
 
+    ${rating_to_see_all_movies_above}=    Set Variable    3
+
+    ${all_movies_above_rating_resp}=    GET On Session    localhost    url=/api/v1/getAboveRating?rating=${rating_to_see_all_movies_above}    headers=${headers}    expected_status=200
+
+    ${list_of_all_movies_above}=    Set Variable    ${all_movies_above_rating_resp.json()['Movies above ${rating_to_see_all_movies_above}.0']}
+    Should Be Equal As Strings    ${list_of_all_movies_above}    ['Cars', 'Toy Story']
+
+getAboveFail
+    ${headers}=    Create Dictionary    Content-Type=application/json
+    ${movie_data1}=    Create Dictionary    name=Cars    movieId=CRS1
+    ${movie_resp1}=    PUT On Session    localhost    /api/v1/addMovie    json=${movie_data1}    headers=${headers}    expected_status=200
+    ${rating1}=    Create Dictionary    rating=4    movieId=CRS1
+
+    ${movie_data2}=    Create Dictionary    name=Toy Story    movieId=TSY1
+    ${movie_resp2}=    PUT On Session    localhost    /api/v1/addMovie    json=${movie_data2}    headers=${headers}    expected_status=200
+    ${rating2}=    Create Dictionary    rating=5    movieId=TSY1
+
+    ${rating_resp}=    PUT On Session    localhost    /api/v1/setRating    json=${rating1}    headers=${headers}    expected_status=200
+    ${rating_resp2}=    PUT On Session    localhost    /api/v1/setRating    json=${rating2}    headers=${headers}    expected_status=200
 
 
+
+    ${rating_to_see_all_movies_above}=    Set Variable    6
+
+    ${all_movies_above_rating_resp}=    GET On Session    localhost    url=/api/v1/getAboveRating?rating=${rating_to_see_all_movies_above}    headers=${headers}    expected_status=400
