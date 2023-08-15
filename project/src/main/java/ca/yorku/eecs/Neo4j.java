@@ -404,6 +404,17 @@ String querry="MATCH (n:Movie) WHERE n.movieId = $id RETURN n.name";
 		
 	}
 	
+	
+	public boolean nuke() {
+		String nuke="MATCH(n)DETACH DELETE n";
+		
+		try(Session ses =driver.session()){
+			ses.writeTransaction(tx -> tx.run(nuke));
+			ses.close();
+			return true;
+		}
+	}
+	
 	public JSONObject getRelationship(String actor, String movie) {
 		String actedIn = String.valueOf(exist(actor, movie));
 		JSONObject jsn = new JSONObject();

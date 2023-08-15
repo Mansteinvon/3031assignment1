@@ -25,6 +25,7 @@ public  class Handler implements HttpHandler{
 	private final String re8="/api/v1/computeBaconPath";
 	private final String re9="/api/v1/getAboveRating";
 	private final String reX="/api/v1/setRating";
+	private final String reXI="/api/v1/nukeDb";
 	
 	
 	
@@ -256,6 +257,10 @@ public void handlePut(HttpExchange request)throws IOException{
     	  //System.out.println("unimplemented");
      
       
+      }
+      else if(path.equals(reXI)) {
+    	  if(neo4j.nuke())
+    		  result=succeed(request,"DB nuked");
       }
       
       

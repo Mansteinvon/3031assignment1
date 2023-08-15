@@ -1,0 +1,2671 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 6.1 (Python 3.10.2 on win32)" generated="20230814 17:26:56.838" rpa="false" schemaversion="4">
+<suite id="s1" name="testBooks" source="C:\Users\johno\git\3031assignment1\3031assignment1\project\testBooks.robot">
+<kw name="Create Session" library="RequestsLibrary" type="SETUP">
+<arg>localhost</arg>
+<arg>http://localhost:8080</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20230814 17:26:57.198" level="INFO">Creating Session using : alias=localhost, url=http://localhost:8080, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20230814 17:26:57.197" endtime="20230814 17:26:57.199"/>
+</kw>
+<test id="s1-t1" name="addActorPass" line="9">
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${headers}</var>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230814 17:26:57.202" level="INFO">${headers} = {'Content-Type': 'application/json'}</msg>
+<status status="PASS" starttime="20230814 17:26:57.201" endtime="20230814 17:26:57.202"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${params}</var>
+<arg>name=Leo DiCaprio</arg>
+<arg>actorId=LD1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230814 17:26:57.204" level="INFO">${params} = {'name': 'Leo DiCaprio', 'actorId': 'LD1'}</msg>
+<status status="PASS" starttime="20230814 17:26:57.203" endtime="20230814 17:26:57.204"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addActor</arg>
+<arg>json=${params}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<msg timestamp="20230814 17:26:57.336" level="INFO">PUT Request : url=http://localhost:8080/api/v1/addActor 
+ path_url=/api/v1/addActor 
+ headers={'User-Agent': 'python-requests/2.27.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '42'} 
+ body=b'{"name": "Leo DiCaprio", "actorId": "LD1"}' 
+ </msg>
+<msg timestamp="20230814 17:26:57.341" level="INFO">PUT Response : url=http://localhost:8080/api/v1/addActor 
+ status=200, reason=OK 
+ headers={'Date': 'Tue, 15 Aug 2023 00:26:57 GMT', 'Content-length': '11'} 
+ body=Actor added 
+ </msg>
+<msg timestamp="20230814 17:26:57.342" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230814 17:26:57.205" endtime="20230814 17:26:57.342"/>
+</kw>
+<timeout value="30 seconds"/>
+<status status="PASS" starttime="20230814 17:26:57.200" endtime="20230814 17:26:57.344"/>
+</test>
+<test id="s1-t2" name="addActorFail" line="14">
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${headers}</var>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230814 17:26:57.351" level="INFO">${headers} = {'Content-Type': 'application/json'}</msg>
+<status status="PASS" starttime="20230814 17:26:57.349" endtime="20230814 17:26:57.351"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${params}</var>
+<arg>name=Leo DiCaprio</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230814 17:26:57.354" level="INFO">${params} = {'name': 'Leo DiCaprio'}</msg>
+<status status="PASS" starttime="20230814 17:26:57.352" endtime="20230814 17:26:57.354"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addActor</arg>
+<arg>json=${params}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=400</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<msg timestamp="20230814 17:26:57.441" level="INFO">PUT Request : url=http://localhost:8080/api/v1/addActor 
+ path_url=/api/v1/addActor 
+ headers={'User-Agent': 'python-requests/2.27.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '24'} 
+ body=b'{"name": "Leo DiCaprio"}' 
+ </msg>
+<msg timestamp="20230814 17:26:57.443" level="INFO">PUT Response : url=http://localhost:8080/api/v1/addActor 
+ status=400, reason=Bad Request 
+ headers={'Date': 'Tue, 15 Aug 2023 00:26:57 GMT', 'Content-length': '22'} 
+ body=cannot understand json 
+ </msg>
+<msg timestamp="20230814 17:26:57.443" level="INFO">${resp} = &lt;Response [400]&gt;</msg>
+<status status="PASS" starttime="20230814 17:26:57.355" endtime="20230814 17:26:57.443"/>
+</kw>
+<timeout value="30 seconds"/>
+<status status="PASS" starttime="20230814 17:26:57.347" endtime="20230814 17:26:57.445"/>
+</test>
+<test id="s1-t3" name="addMoviePass" line="19">
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${headers}</var>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230814 17:26:57.452" level="INFO">${headers} = {'Content-Type': 'application/json'}</msg>
+<status status="PASS" starttime="20230814 17:26:57.451" endtime="20230814 17:26:57.452"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${params}</var>
+<arg>name=Oppenheimer</arg>
+<arg>movieId=OP1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230814 17:26:57.454" level="INFO">${params} = {'name': 'Oppenheimer', 'movieId': 'OP1'}</msg>
+<status status="PASS" starttime="20230814 17:26:57.452" endtime="20230814 17:26:57.454"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addMovie</arg>
+<arg>json=${params}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<msg timestamp="20230814 17:26:57.573" level="INFO">PUT Request : url=http://localhost:8080/api/v1/addMovie 
+ path_url=/api/v1/addMovie 
+ headers={'User-Agent': 'python-requests/2.27.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '41'} 
+ body=b'{"name": "Oppenheimer", "movieId": "OP1"}' 
+ </msg>
+<msg timestamp="20230814 17:26:57.574" level="INFO">PUT Response : url=http://localhost:8080/api/v1/addMovie 
+ status=200, reason=OK 
+ headers={'Date': 'Tue, 15 Aug 2023 00:26:57 GMT', 'Content-length': '12'} 
+ body=Movies added 
+ </msg>
+<msg timestamp="20230814 17:26:57.575" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230814 17:26:57.455" endtime="20230814 17:26:57.575"/>
+</kw>
+<timeout value="30 seconds"/>
+<status status="PASS" starttime="20230814 17:26:57.449" endtime="20230814 17:26:57.577"/>
+</test>
+<test id="s1-t4" name="addMovieFail" line="24">
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${headers}</var>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230814 17:26:57.583" level="INFO">${headers} = {'Content-Type': 'application/json'}</msg>
+<status status="PASS" starttime="20230814 17:26:57.582" endtime="20230814 17:26:57.583"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${params}</var>
+<arg>name=Oppenheimer</arg>
+<arg>movieIdentification=OP1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230814 17:26:57.585" level="INFO">${params} = {'name': 'Oppenheimer', 'movieIdentification': 'OP1'}</msg>
+<status status="PASS" starttime="20230814 17:26:57.584" endtime="20230814 17:26:57.585"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addMovie</arg>
+<arg>json=${params}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=400</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<msg timestamp="20230814 17:26:57.656" level="INFO">PUT Request : url=http://localhost:8080/api/v1/addMovie 
+ path_url=/api/v1/addMovie 
+ headers={'User-Agent': 'python-requests/2.27.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '53'} 
+ body=b'{"name": "Oppenheimer", "movieIdentification": "OP1"}' 
+ </msg>
+<msg timestamp="20230814 17:26:57.657" level="INFO">PUT Response : url=http://localhost:8080/api/v1/addMovie 
+ status=400, reason=Bad Request 
+ headers={'Date': 'Tue, 15 Aug 2023 00:26:57 GMT', 'Content-length': '22'} 
+ body=cannot understand json 
+ </msg>
+<msg timestamp="20230814 17:26:57.658" level="INFO">${resp} = &lt;Response [400]&gt;</msg>
+<status status="PASS" starttime="20230814 17:26:57.586" endtime="20230814 17:26:57.658"/>
+</kw>
+<timeout value="30 seconds"/>
+<status status="PASS" starttime="20230814 17:26:57.580" endtime="20230814 17:26:57.660"/>
+</test>
+<test id="s1-t5" name="addRelationshipPass" line="29">
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${headers}</var>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230814 17:26:57.671" level="INFO">${headers} = {'Content-Type': 'application/json'}</msg>
+<status status="PASS" starttime="20230814 17:26:57.670" endtime="20230814 17:26:57.671"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${actor_data}</var>
+<arg>name=Leo DiCaprio</arg>
+<arg>actorId=LDC1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230814 17:26:57.673" level="INFO">${actor_data} = {'name': 'Leo DiCaprio', 'actorId': 'LDC1'}</msg>
+<status status="PASS" starttime="20230814 17:26:57.672" endtime="20230814 17:26:57.673"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${movie_data}</var>
+<arg>name=The Revenant</arg>
+<arg>movieId=TRVN1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230814 17:26:57.675" level="INFO">${movie_data} = {'name': 'The Revenant', 'movieId': 'TRVN1'}</msg>
+<status status="PASS" starttime="20230814 17:26:57.674" endtime="20230814 17:26:57.676"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${actor_resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addActor</arg>
+<arg>json=${actor_data}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<msg timestamp="20230814 17:26:57.781" level="INFO">PUT Request : url=http://localhost:8080/api/v1/addActor 
+ path_url=/api/v1/addActor 
+ headers={'User-Agent': 'python-requests/2.27.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '43'} 
+ body=b'{"name": "Leo DiCaprio", "actorId": "LDC1"}' 
+ </msg>
+<msg timestamp="20230814 17:26:57.781" level="INFO">PUT Response : url=http://localhost:8080/api/v1/addActor 
+ status=200, reason=OK 
+ headers={'Date': 'Tue, 15 Aug 2023 00:26:57 GMT', 'Content-length': '11'} 
+ body=Actor added 
+ </msg>
+<msg timestamp="20230814 17:26:57.782" level="INFO">${actor_resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230814 17:26:57.678" endtime="20230814 17:26:57.782"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${movie_resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addMovie</arg>
+<arg>json=${movie_data}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<msg timestamp="20230814 17:26:57.907" level="INFO">PUT Request : url=http://localhost:8080/api/v1/addMovie 
+ path_url=/api/v1/addMovie 
+ headers={'User-Agent': 'python-requests/2.27.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '44'} 
+ body=b'{"name": "The Revenant", "movieId": "TRVN1"}' 
+ </msg>
+<msg timestamp="20230814 17:26:57.907" level="INFO">PUT Response : url=http://localhost:8080/api/v1/addMovie 
+ status=200, reason=OK 
+ headers={'Date': 'Tue, 15 Aug 2023 00:26:57 GMT', 'Content-length': '12'} 
+ body=Movies added 
+ </msg>
+<msg timestamp="20230814 17:26:57.908" level="INFO">${movie_resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230814 17:26:57.784" endtime="20230814 17:26:57.908"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${params}</var>
+<arg>actorId=LDC1</arg>
+<arg>movieId=TRVN1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230814 17:26:57.919" level="INFO">${params} = {'actorId': 'LDC1', 'movieId': 'TRVN1'}</msg>
+<status status="PASS" starttime="20230814 17:26:57.918" endtime="20230814 17:26:57.919"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addRelationship</arg>
+<arg>json=${params}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<msg timestamp="20230814 17:26:58.225" level="INFO">PUT Request : url=http://localhost:8080/api/v1/addRelationship 
+ path_url=/api/v1/addRelationship 
+ headers={'User-Agent': 'python-requests/2.27.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '39'} 
+ body=b'{"actorId": "LDC1", "movieId": "TRVN1"}' 
+ </msg>
+<msg timestamp="20230814 17:26:58.227" level="INFO">PUT Response : url=http://localhost:8080/api/v1/addRelationship 
+ status=200, reason=OK 
+ headers={'Date': 'Tue, 15 Aug 2023 00:26:58 GMT', 'Content-length': '18'} 
+ body=relationship added 
+ </msg>
+<msg timestamp="20230814 17:26:58.227" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230814 17:26:57.920" endtime="20230814 17:26:58.227"/>
+</kw>
+<timeout value="30 seconds"/>
+<status status="PASS" starttime="20230814 17:26:57.668" endtime="20230814 17:26:58.244"/>
+</test>
+<test id="s1-t6" name="addRelationshipFail" line="42">
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${headers}</var>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230814 17:26:58.309" level="INFO">${headers} = {'Content-Type': 'application/json'}</msg>
+<status status="PASS" starttime="20230814 17:26:58.308" endtime="20230814 17:26:58.310"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${actor_data}</var>
+<arg>name=Leo DiCaprio</arg>
+<arg>actorId=LDC1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230814 17:26:58.313" level="INFO">${actor_data} = {'name': 'Leo DiCaprio', 'actorId': 'LDC1'}</msg>
+<status status="PASS" starttime="20230814 17:26:58.311" endtime="20230814 17:26:58.313"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${movie_data}</var>
+<arg>name=The Revenant</arg>
+<arg>movieId=TRVN1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230814 17:26:58.316" level="INFO">${movie_data} = {'name': 'The Revenant', 'movieId': 'TRVN1'}</msg>
+<status status="PASS" starttime="20230814 17:26:58.314" endtime="20230814 17:26:58.316"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${actor_resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addActor</arg>
+<arg>json=${actor_data}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<msg timestamp="20230814 17:26:58.420" level="INFO">PUT Request : url=http://localhost:8080/api/v1/addActor 
+ path_url=/api/v1/addActor 
+ headers={'User-Agent': 'python-requests/2.27.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '43'} 
+ body=b'{"name": "Leo DiCaprio", "actorId": "LDC1"}' 
+ </msg>
+<msg timestamp="20230814 17:26:58.422" level="INFO">PUT Response : url=http://localhost:8080/api/v1/addActor 
+ status=400, reason=Bad Request 
+ headers={'Date': 'Tue, 15 Aug 2023 00:26:58 GMT', 'Content-length': '21'} 
+ body=edge cased, not added 
+ </msg>
+<msg timestamp="20230814 17:26:58.423" level="FAIL">Url: http://localhost:8080/api/v1/addActor Expected status: 400 != 200</msg>
+<status status="FAIL" starttime="20230814 17:26:58.317" endtime="20230814 17:26:58.427"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${movie_resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addMovie</arg>
+<arg>json=${movie_data}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20230814 17:26:58.428" endtime="20230814 17:26:58.429"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${params}</var>
+<arg>actorId=LDC1</arg>
+<arg>movieId=TRVN2</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="NOT RUN" starttime="20230814 17:26:58.431" endtime="20230814 17:26:58.432"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addRelationship</arg>
+<arg>json=${params}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=404</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20230814 17:26:58.433" endtime="20230814 17:26:58.434"/>
+</kw>
+<timeout value="30 seconds"/>
+<status status="FAIL" starttime="20230814 17:26:58.305" endtime="20230814 17:26:58.435">Url: http://localhost:8080/api/v1/addActor Expected status: 400 != 200</status>
+</test>
+<test id="s1-t7" name="getActorPass" line="55">
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${headers}</var>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230814 17:26:58.443" level="INFO">${headers} = {'Content-Type': 'application/json'}</msg>
+<status status="PASS" starttime="20230814 17:26:58.442" endtime="20230814 17:26:58.443"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${actor_data}</var>
+<arg>name=Leo DiCaprio</arg>
+<arg>actorId=LD1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230814 17:26:58.445" level="INFO">${actor_data} = {'name': 'Leo DiCaprio', 'actorId': 'LD1'}</msg>
+<status status="PASS" starttime="20230814 17:26:58.444" endtime="20230814 17:26:58.445"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${movie_data1}</var>
+<arg>name=The Revenant</arg>
+<arg>movieId=TRVN1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230814 17:26:58.448" level="INFO">${movie_data1} = {'name': 'The Revenant', 'movieId': 'TRVN1'}</msg>
+<status status="PASS" starttime="20230814 17:26:58.446" endtime="20230814 17:26:58.448"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${movie_data2}</var>
+<arg>name=The Wolf of Wall Street</arg>
+<arg>movieId=TWOWS1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230814 17:26:58.450" level="INFO">${movie_data2} = {'name': 'The Wolf of Wall Street', 'movieId': 'TWOWS1'}</msg>
+<status status="PASS" starttime="20230814 17:26:58.449" endtime="20230814 17:26:58.450"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${actor_resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addActor</arg>
+<arg>json=${actor_data}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<msg timestamp="20230814 17:26:58.549" level="INFO">PUT Request : url=http://localhost:8080/api/v1/addActor 
+ path_url=/api/v1/addActor 
+ headers={'User-Agent': 'python-requests/2.27.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '42'} 
+ body=b'{"name": "Leo DiCaprio", "actorId": "LD1"}' 
+ </msg>
+<msg timestamp="20230814 17:26:58.550" level="INFO">PUT Response : url=http://localhost:8080/api/v1/addActor 
+ status=400, reason=Bad Request 
+ headers={'Date': 'Tue, 15 Aug 2023 00:26:58 GMT', 'Content-length': '21'} 
+ body=edge cased, not added 
+ </msg>
+<msg timestamp="20230814 17:26:58.550" level="FAIL">Url: http://localhost:8080/api/v1/addActor Expected status: 400 != 200</msg>
+<status status="FAIL" starttime="20230814 17:26:58.451" endtime="20230814 17:26:58.551"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${movie_resp1}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addMovie</arg>
+<arg>json=${movie_data1}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20230814 17:26:58.553" endtime="20230814 17:26:58.553"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${movie_resp2}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addMovie</arg>
+<arg>json=${movie_data2}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20230814 17:26:58.555" endtime="20230814 17:26:58.555"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${relationship_data1}</var>
+<arg>actorId=LD1</arg>
+<arg>movieId=TRVN1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="NOT RUN" starttime="20230814 17:26:58.556" endtime="20230814 17:26:58.556"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${relationship_resp1}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addRelationship</arg>
+<arg>json=${relationship_data1}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20230814 17:26:58.557" endtime="20230814 17:26:58.558"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${relationship_data2}</var>
+<arg>actorId=LD1</arg>
+<arg>movieId=TWOWS1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="NOT RUN" starttime="20230814 17:26:58.560" endtime="20230814 17:26:58.560"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${relationship_resp2}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addRelationship</arg>
+<arg>json=${relationship_data2}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20230814 17:26:58.563" endtime="20230814 17:26:58.564"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${actor_id}</var>
+<arg>LD1</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" starttime="20230814 17:26:58.568" endtime="20230814 17:26:58.568"/>
+</kw>
+<kw name="GET On Session" library="RequestsLibrary">
+<var>${resp}</var>
+<arg>localhost</arg>
+<arg>url=/api/v1/getActor?actorId=${actor_id}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20230814 17:26:58.570" endtime="20230814 17:26:58.570"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${resp.json()}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="NOT RUN" starttime="20230814 17:26:58.571" endtime="20230814 17:26:58.571"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${actor_name}</var>
+<arg>${resp.json()['name']}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" starttime="20230814 17:26:58.574" endtime="20230814 17:26:58.575"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${movies_acted_in}</var>
+<arg>${resp.json()['movies']}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" starttime="20230814 17:26:58.576" endtime="20230814 17:26:58.576"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${actor_name}</arg>
+<arg>Leo DiCaprio</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="NOT RUN" starttime="20230814 17:26:58.577" endtime="20230814 17:26:58.578"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${movies_acted_in}</arg>
+<arg>['TRVN1', 'TWOWS1']</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="NOT RUN" starttime="20230814 17:26:58.586" endtime="20230814 17:26:58.587"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${actor_id}</arg>
+<arg>LD1</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="NOT RUN" starttime="20230814 17:26:58.588" endtime="20230814 17:26:58.588"/>
+</kw>
+<timeout value="30 seconds"/>
+<status status="FAIL" starttime="20230814 17:26:58.440" endtime="20230814 17:26:58.590">Url: http://localhost:8080/api/v1/addActor Expected status: 400 != 200</status>
+</test>
+<test id="s1-t8" name="getActorFail" line="90">
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${headers}</var>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230814 17:26:58.597" level="INFO">${headers} = {'Content-Type': 'application/json'}</msg>
+<status status="PASS" starttime="20230814 17:26:58.595" endtime="20230814 17:26:58.597"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${actor_data}</var>
+<arg>name=Leo DiCaprio</arg>
+<arg>actorId=LD1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230814 17:26:58.600" level="INFO">${actor_data} = {'name': 'Leo DiCaprio', 'actorId': 'LD1'}</msg>
+<status status="PASS" starttime="20230814 17:26:58.598" endtime="20230814 17:26:58.600"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${actor_resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addActor</arg>
+<arg>json=${actor_data}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<msg timestamp="20230814 17:26:58.689" level="INFO">PUT Request : url=http://localhost:8080/api/v1/addActor 
+ path_url=/api/v1/addActor 
+ headers={'User-Agent': 'python-requests/2.27.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '42'} 
+ body=b'{"name": "Leo DiCaprio", "actorId": "LD1"}' 
+ </msg>
+<msg timestamp="20230814 17:26:58.690" level="INFO">PUT Response : url=http://localhost:8080/api/v1/addActor 
+ status=400, reason=Bad Request 
+ headers={'Date': 'Tue, 15 Aug 2023 00:26:58 GMT', 'Content-length': '21'} 
+ body=edge cased, not added 
+ </msg>
+<msg timestamp="20230814 17:26:58.690" level="FAIL">Url: http://localhost:8080/api/v1/addActor Expected status: 400 != 200</msg>
+<status status="FAIL" starttime="20230814 17:26:58.601" endtime="20230814 17:26:58.692"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${actor_id}</var>
+<arg>LD2</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" starttime="20230814 17:26:58.693" endtime="20230814 17:26:58.693"/>
+</kw>
+<kw name="GET On Session" library="RequestsLibrary">
+<var>${resp}</var>
+<arg>localhost</arg>
+<arg>url=/api/v1/getActor?actorId=${actor_id}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=404</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20230814 17:26:58.697" endtime="20230814 17:26:58.697"/>
+</kw>
+<timeout value="30 seconds"/>
+<status status="FAIL" starttime="20230814 17:26:58.593" endtime="20230814 17:26:58.701">Url: http://localhost:8080/api/v1/addActor Expected status: 400 != 200</status>
+</test>
+<test id="s1-t9" name="getMoviePass" line="99">
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${headers}</var>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230814 17:26:58.711" level="INFO">${headers} = {'Content-Type': 'application/json'}</msg>
+<status status="PASS" starttime="20230814 17:26:58.710" endtime="20230814 17:26:58.712"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${movie_data}</var>
+<arg>name=Oppenheimer</arg>
+<arg>movieId=OP1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230814 17:26:58.715" level="INFO">${movie_data} = {'name': 'Oppenheimer', 'movieId': 'OP1'}</msg>
+<status status="PASS" starttime="20230814 17:26:58.713" endtime="20230814 17:26:58.716"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${movie_resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addMovie</arg>
+<arg>json=${movie_data}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<msg timestamp="20230814 17:26:58.809" level="INFO">PUT Request : url=http://localhost:8080/api/v1/addMovie 
+ path_url=/api/v1/addMovie 
+ headers={'User-Agent': 'python-requests/2.27.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '41'} 
+ body=b'{"name": "Oppenheimer", "movieId": "OP1"}' 
+ </msg>
+<msg timestamp="20230814 17:26:58.809" level="INFO">PUT Response : url=http://localhost:8080/api/v1/addMovie 
+ status=400, reason=Bad Request 
+ headers={'Date': 'Tue, 15 Aug 2023 00:26:58 GMT', 'Content-length': '21'} 
+ body=edge cased, not added 
+ </msg>
+<msg timestamp="20230814 17:26:58.810" level="FAIL">Url: http://localhost:8080/api/v1/addMovie Expected status: 400 != 200</msg>
+<status status="FAIL" starttime="20230814 17:26:58.717" endtime="20230814 17:26:58.811"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${actor_data1}</var>
+<arg>name=Cillian Murphy</arg>
+<arg>actorId=CM1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="NOT RUN" starttime="20230814 17:26:58.813" endtime="20230814 17:26:58.814"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${actor_data2}</var>
+<arg>name=Rami Malek</arg>
+<arg>actorId=RM1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="NOT RUN" starttime="20230814 17:26:58.818" endtime="20230814 17:26:58.818"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${actor_resp1}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addActor</arg>
+<arg>json=${actor_data1}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20230814 17:26:58.819" endtime="20230814 17:26:58.819"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${actor_resp1}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addActor</arg>
+<arg>json=${actor_data2}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20230814 17:26:58.821" endtime="20230814 17:26:58.821"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${relationship_data1}</var>
+<arg>actorId=CM1</arg>
+<arg>movieId=OP1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="NOT RUN" starttime="20230814 17:26:58.822" endtime="20230814 17:26:58.822"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${relationship_resp1}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addRelationship</arg>
+<arg>json=${relationship_data1}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20230814 17:26:58.823" endtime="20230814 17:26:58.824"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${relationship_data2}</var>
+<arg>actorId=RM1</arg>
+<arg>movieId=OP1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="NOT RUN" starttime="20230814 17:26:58.826" endtime="20230814 17:26:58.826"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${relationship_resp2}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addRelationship</arg>
+<arg>json=${relationship_data2}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20230814 17:26:58.829" endtime="20230814 17:26:58.830"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${movie_id}</var>
+<arg>OP1</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" starttime="20230814 17:26:58.832" endtime="20230814 17:26:58.832"/>
+</kw>
+<kw name="GET On Session" library="RequestsLibrary">
+<var>${resp}</var>
+<arg>localhost</arg>
+<arg>url=/api/v1/getMovie?movieId=${movie_id}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20230814 17:26:58.836" endtime="20230814 17:26:58.836"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${resp.json()}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="NOT RUN" starttime="20230814 17:26:58.838" endtime="20230814 17:26:58.838"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${movie_name}</var>
+<arg>${resp.json()['name']}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" starttime="20230814 17:26:58.841" endtime="20230814 17:26:58.841"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${movie_id}</var>
+<arg>${resp.json()['movieId']}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" starttime="20230814 17:26:58.846" endtime="20230814 17:26:58.846"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${movie_actors}</var>
+<arg>${resp.json()['actors']}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" starttime="20230814 17:26:58.860" endtime="20230814 17:26:58.861"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${movie_name}</arg>
+<arg>Oppenheimer</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="NOT RUN" starttime="20230814 17:26:58.879" endtime="20230814 17:26:58.879"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${movie_id}</arg>
+<arg>OP1</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="NOT RUN" starttime="20230814 17:26:58.882" endtime="20230814 17:26:58.882"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${movie_actors}</arg>
+<arg>['CM1', 'RM1']</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="NOT RUN" starttime="20230814 17:26:58.885" endtime="20230814 17:26:58.886"/>
+</kw>
+<timeout value="30 seconds"/>
+<status status="FAIL" starttime="20230814 17:26:58.708" endtime="20230814 17:26:58.887">Url: http://localhost:8080/api/v1/addMovie Expected status: 400 != 200</status>
+</test>
+<test id="s1-t10" name="getMovieFail" line="132">
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${headers}</var>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230814 17:26:58.895" level="INFO">${headers} = {'Content-Type': 'application/json'}</msg>
+<status status="PASS" starttime="20230814 17:26:58.894" endtime="20230814 17:26:58.895"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${movie_data}</var>
+<arg>name=Oppenheimer</arg>
+<arg>movieId=OP1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230814 17:26:58.900" level="INFO">${movie_data} = {'name': 'Oppenheimer', 'movieId': 'OP1'}</msg>
+<status status="PASS" starttime="20230814 17:26:58.896" endtime="20230814 17:26:58.900"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${movie_resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addMovie</arg>
+<arg>json=${movie_data}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<msg timestamp="20230814 17:26:59.037" level="INFO">PUT Request : url=http://localhost:8080/api/v1/addMovie 
+ path_url=/api/v1/addMovie 
+ headers={'User-Agent': 'python-requests/2.27.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '41'} 
+ body=b'{"name": "Oppenheimer", "movieId": "OP1"}' 
+ </msg>
+<msg timestamp="20230814 17:26:59.037" level="INFO">PUT Response : url=http://localhost:8080/api/v1/addMovie 
+ status=400, reason=Bad Request 
+ headers={'Date': 'Tue, 15 Aug 2023 00:26:59 GMT', 'Content-length': '21'} 
+ body=edge cased, not added 
+ </msg>
+<msg timestamp="20230814 17:26:59.038" level="FAIL">Url: http://localhost:8080/api/v1/addMovie Expected status: 400 != 200</msg>
+<status status="FAIL" starttime="20230814 17:26:58.934" endtime="20230814 17:26:59.039"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${actor_data1}</var>
+<arg>name=Cillian Murphy</arg>
+<arg>actorId=CM1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="NOT RUN" starttime="20230814 17:26:59.041" endtime="20230814 17:26:59.041"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${actor_data2}</var>
+<arg>name=Rami Malek</arg>
+<arg>actorId=RM1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="NOT RUN" starttime="20230814 17:26:59.042" endtime="20230814 17:26:59.043"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${actor_resp1}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addActor</arg>
+<arg>json=${actor_data1}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20230814 17:26:59.044" endtime="20230814 17:26:59.044"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${actor_resp1}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addActor</arg>
+<arg>json=${actor_data2}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20230814 17:26:59.045" endtime="20230814 17:26:59.045"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${relationship_data1}</var>
+<arg>actorId=CM1</arg>
+<arg>movieId=OP1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="NOT RUN" starttime="20230814 17:26:59.048" endtime="20230814 17:26:59.048"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${relationship_resp1}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addRelationship</arg>
+<arg>json=${relationship_data1}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20230814 17:26:59.050" endtime="20230814 17:26:59.051"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${relationship_data2}</var>
+<arg>actorId=RM1</arg>
+<arg>movieId=OP1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="NOT RUN" starttime="20230814 17:26:59.052" endtime="20230814 17:26:59.052"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${relationship_resp2}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addRelationship</arg>
+<arg>json=${relationship_data2}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20230814 17:26:59.053" endtime="20230814 17:26:59.053"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${movie_id}</var>
+<arg>OP11</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" starttime="20230814 17:26:59.054" endtime="20230814 17:26:59.054"/>
+</kw>
+<kw name="GET On Session" library="RequestsLibrary">
+<var>${resp}</var>
+<arg>localhost</arg>
+<arg>url=/api/v1/getMovie?movieId=${movie_id}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=404</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20230814 17:26:59.056" endtime="20230814 17:26:59.056"/>
+</kw>
+<timeout value="30 seconds"/>
+<status status="FAIL" starttime="20230814 17:26:58.892" endtime="20230814 17:26:59.062">Url: http://localhost:8080/api/v1/addMovie Expected status: 400 != 200</status>
+</test>
+<test id="s1-t11" name="hasRelationshipPass" line="153">
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${headers}</var>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230814 17:26:59.072" level="INFO">${headers} = {'Content-Type': 'application/json'}</msg>
+<status status="PASS" starttime="20230814 17:26:59.071" endtime="20230814 17:26:59.073"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${actor_data}</var>
+<arg>name=Leo DiCaprio</arg>
+<arg>actorId=LDC1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230814 17:26:59.074" level="INFO">${actor_data} = {'name': 'Leo DiCaprio', 'actorId': 'LDC1'}</msg>
+<status status="PASS" starttime="20230814 17:26:59.073" endtime="20230814 17:26:59.074"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${movie_data}</var>
+<arg>name=The Revenant</arg>
+<arg>movieId=TRVN1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230814 17:26:59.077" level="INFO">${movie_data} = {'name': 'The Revenant', 'movieId': 'TRVN1'}</msg>
+<status status="PASS" starttime="20230814 17:26:59.075" endtime="20230814 17:26:59.077"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${actor_resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addActor</arg>
+<arg>json=${actor_data}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<msg timestamp="20230814 17:26:59.174" level="INFO">PUT Request : url=http://localhost:8080/api/v1/addActor 
+ path_url=/api/v1/addActor 
+ headers={'User-Agent': 'python-requests/2.27.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '43'} 
+ body=b'{"name": "Leo DiCaprio", "actorId": "LDC1"}' 
+ </msg>
+<msg timestamp="20230814 17:26:59.174" level="INFO">PUT Response : url=http://localhost:8080/api/v1/addActor 
+ status=400, reason=Bad Request 
+ headers={'Date': 'Tue, 15 Aug 2023 00:26:59 GMT', 'Content-length': '21'} 
+ body=edge cased, not added 
+ </msg>
+<msg timestamp="20230814 17:26:59.175" level="FAIL">Url: http://localhost:8080/api/v1/addActor Expected status: 400 != 200</msg>
+<status status="FAIL" starttime="20230814 17:26:59.078" endtime="20230814 17:26:59.176"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${movie_resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addMovie</arg>
+<arg>json=${movie_data}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20230814 17:26:59.178" endtime="20230814 17:26:59.178"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${relationship_data}</var>
+<arg>actorId=LDC1</arg>
+<arg>movieId=TRVN1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="NOT RUN" starttime="20230814 17:26:59.179" endtime="20230814 17:26:59.179"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${relationship_resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addRelationship</arg>
+<arg>json=${relationship_data}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20230814 17:26:59.181" endtime="20230814 17:26:59.182"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${actor_id}</var>
+<arg>LDC1</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" starttime="20230814 17:26:59.183" endtime="20230814 17:26:59.183"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${movie_id}</var>
+<arg>TRVN1</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" starttime="20230814 17:26:59.184" endtime="20230814 17:26:59.184"/>
+</kw>
+<kw name="GET On Session" library="RequestsLibrary">
+<var>${hasRelationship_resp}</var>
+<arg>localhost</arg>
+<arg>url=/api/v1/hasRelationship?actorId=${actor_id}&amp;movieId=${movie_id}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20230814 17:26:59.186" endtime="20230814 17:26:59.186"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${actor_id_resp}</var>
+<arg>${hasRelationship_resp.json()['actorId']}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" starttime="20230814 17:26:59.187" endtime="20230814 17:26:59.188"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${movie_id_resp}</var>
+<arg>${hasRelationship_resp.json()['movieId']}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" starttime="20230814 17:26:59.189" endtime="20230814 17:26:59.189"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${hasRelationship_bool}</var>
+<arg>${hasRelationship_resp.json()['hasRelationship']}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" starttime="20230814 17:26:59.190" endtime="20230814 17:26:59.190"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${actor_id_resp}</arg>
+<arg>LDC1</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="NOT RUN" starttime="20230814 17:26:59.191" endtime="20230814 17:26:59.192"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${movie_id_resp}</arg>
+<arg>TRVN1</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="NOT RUN" starttime="20230814 17:26:59.193" endtime="20230814 17:26:59.193"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${hasRelationship_bool}</arg>
+<arg>true</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="NOT RUN" starttime="20230814 17:26:59.194" endtime="20230814 17:26:59.194"/>
+</kw>
+<timeout value="30 seconds"/>
+<status status="FAIL" starttime="20230814 17:26:59.069" endtime="20230814 17:26:59.195">Url: http://localhost:8080/api/v1/addActor Expected status: 400 != 200</status>
+</test>
+<test id="s1-t12" name="hasRelationshipFail" line="181">
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${headers}</var>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230814 17:26:59.205" level="INFO">${headers} = {'Content-Type': 'application/json'}</msg>
+<status status="PASS" starttime="20230814 17:26:59.203" endtime="20230814 17:26:59.205"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${actor_data}</var>
+<arg>name=Leo DiCaprio</arg>
+<arg>actorId=LDC1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230814 17:26:59.208" level="INFO">${actor_data} = {'name': 'Leo DiCaprio', 'actorId': 'LDC1'}</msg>
+<status status="PASS" starttime="20230814 17:26:59.206" endtime="20230814 17:26:59.208"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${movie_data}</var>
+<arg>name=The Revenant</arg>
+<arg>movieId=TRVN1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230814 17:26:59.211" level="INFO">${movie_data} = {'name': 'The Revenant', 'movieId': 'TRVN1'}</msg>
+<status status="PASS" starttime="20230814 17:26:59.209" endtime="20230814 17:26:59.211"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${actor_resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addActor</arg>
+<arg>json=${actor_data}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<msg timestamp="20230814 17:26:59.301" level="INFO">PUT Request : url=http://localhost:8080/api/v1/addActor 
+ path_url=/api/v1/addActor 
+ headers={'User-Agent': 'python-requests/2.27.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '43'} 
+ body=b'{"name": "Leo DiCaprio", "actorId": "LDC1"}' 
+ </msg>
+<msg timestamp="20230814 17:26:59.301" level="INFO">PUT Response : url=http://localhost:8080/api/v1/addActor 
+ status=400, reason=Bad Request 
+ headers={'Date': 'Tue, 15 Aug 2023 00:26:59 GMT', 'Content-length': '21'} 
+ body=edge cased, not added 
+ </msg>
+<msg timestamp="20230814 17:26:59.302" level="FAIL">Url: http://localhost:8080/api/v1/addActor Expected status: 400 != 200</msg>
+<status status="FAIL" starttime="20230814 17:26:59.213" endtime="20230814 17:26:59.303"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${movie_resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addMovie</arg>
+<arg>json=${movie_data}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20230814 17:26:59.305" endtime="20230814 17:26:59.305"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${relationship_data}</var>
+<arg>actorId=LDC1</arg>
+<arg>movieId=TRVN1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="NOT RUN" starttime="20230814 17:26:59.306" endtime="20230814 17:26:59.307"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${relationship_resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addRelationship</arg>
+<arg>json=${relationship_data}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20230814 17:26:59.308" endtime="20230814 17:26:59.309"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${actor_id}</var>
+<arg>LDC1</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" starttime="20230814 17:26:59.311" endtime="20230814 17:26:59.312"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${movie_id}</var>
+<arg>TRVN1</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" starttime="20230814 17:26:59.313" endtime="20230814 17:26:59.313"/>
+</kw>
+<kw name="GET On Session" library="RequestsLibrary">
+<var>${hasRelationship_resp}</var>
+<arg>localhost</arg>
+<arg>url=/api/v1/hasRelationship?actorId=${movie_id}&amp;movieId=${actor_id}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=404</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20230814 17:26:59.317" endtime="20230814 17:26:59.318"/>
+</kw>
+<timeout value="30 seconds"/>
+<status status="FAIL" starttime="20230814 17:26:59.202" endtime="20230814 17:26:59.318">Url: http://localhost:8080/api/v1/addActor Expected status: 400 != 200</status>
+</test>
+<test id="s1-t13" name="computeBaconNumberPass" line="201">
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${headers}</var>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230814 17:26:59.326" level="INFO">${headers} = {'Content-Type': 'application/json'}</msg>
+<status status="PASS" starttime="20230814 17:26:59.325" endtime="20230814 17:26:59.326"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${actor_kevin_bacon}</var>
+<arg>name=Kevin Bacon</arg>
+<arg>actorId=nm0000102</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230814 17:26:59.328" level="INFO">${actor_kevin_bacon} = {'name': 'Kevin Bacon', 'actorId': 'nm0000102'}</msg>
+<status status="PASS" starttime="20230814 17:26:59.327" endtime="20230814 17:26:59.329"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${actor_keanu_reeves}</var>
+<arg>name=Keanu Reeves</arg>
+<arg>actorId=KR1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230814 17:26:59.331" level="INFO">${actor_keanu_reeves} = {'name': 'Keanu Reeves', 'actorId': 'KR1'}</msg>
+<status status="PASS" starttime="20230814 17:26:59.330" endtime="20230814 17:26:59.332"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${actor_al_pacino}</var>
+<arg>name=Al Pacino</arg>
+<arg>actorId=AP1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230814 17:26:59.334" level="INFO">${actor_al_pacino} = {'name': 'Al Pacino', 'actorId': 'AP1'}</msg>
+<status status="PASS" starttime="20230814 17:26:59.333" endtime="20230814 17:26:59.334"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${actor_hugo_weaving}</var>
+<arg>name=Hugo Weaving</arg>
+<arg>actorId=HW1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230814 17:26:59.335" level="INFO">${actor_hugo_weaving} = {'name': 'Hugo Weaving', 'actorId': 'HW1'}</msg>
+<status status="PASS" starttime="20230814 17:26:59.335" endtime="20230814 17:26:59.336"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${actor_kevin_bacon_resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addActor</arg>
+<arg>json=${actor_kevin_bacon}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<msg timestamp="20230814 17:26:59.431" level="INFO">PUT Request : url=http://localhost:8080/api/v1/addActor 
+ path_url=/api/v1/addActor 
+ headers={'User-Agent': 'python-requests/2.27.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '47'} 
+ body=b'{"name": "Kevin Bacon", "actorId": "nm0000102"}' 
+ </msg>
+<msg timestamp="20230814 17:26:59.431" level="INFO">PUT Response : url=http://localhost:8080/api/v1/addActor 
+ status=200, reason=OK 
+ headers={'Date': 'Tue, 15 Aug 2023 00:26:59 GMT', 'Content-length': '11'} 
+ body=Actor added 
+ </msg>
+<msg timestamp="20230814 17:26:59.432" level="INFO">${actor_kevin_bacon_resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230814 17:26:59.336" endtime="20230814 17:26:59.432"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${actor_keanu_reeves_resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addActor</arg>
+<arg>json=${actor_keanu_reeves}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<msg timestamp="20230814 17:26:59.520" level="INFO">PUT Request : url=http://localhost:8080/api/v1/addActor 
+ path_url=/api/v1/addActor 
+ headers={'User-Agent': 'python-requests/2.27.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '42'} 
+ body=b'{"name": "Keanu Reeves", "actorId": "KR1"}' 
+ </msg>
+<msg timestamp="20230814 17:26:59.520" level="INFO">PUT Response : url=http://localhost:8080/api/v1/addActor 
+ status=200, reason=OK 
+ headers={'Date': 'Tue, 15 Aug 2023 00:26:59 GMT', 'Content-length': '11'} 
+ body=Actor added 
+ </msg>
+<msg timestamp="20230814 17:26:59.521" level="INFO">${actor_keanu_reeves_resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230814 17:26:59.433" endtime="20230814 17:26:59.522"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${actor_al_pacino_resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addActor</arg>
+<arg>json=${actor_al_pacino}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<msg timestamp="20230814 17:26:59.631" level="INFO">PUT Request : url=http://localhost:8080/api/v1/addActor 
+ path_url=/api/v1/addActor 
+ headers={'User-Agent': 'python-requests/2.27.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '39'} 
+ body=b'{"name": "Al Pacino", "actorId": "AP1"}' 
+ </msg>
+<msg timestamp="20230814 17:26:59.632" level="INFO">PUT Response : url=http://localhost:8080/api/v1/addActor 
+ status=200, reason=OK 
+ headers={'Date': 'Tue, 15 Aug 2023 00:26:59 GMT', 'Content-length': '11'} 
+ body=Actor added 
+ </msg>
+<msg timestamp="20230814 17:26:59.632" level="INFO">${actor_al_pacino_resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230814 17:26:59.523" endtime="20230814 17:26:59.633"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${actor_hugo_weaving_resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addActor</arg>
+<arg>json=${actor_hugo_weaving}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<msg timestamp="20230814 17:26:59.752" level="INFO">PUT Request : url=http://localhost:8080/api/v1/addActor 
+ path_url=/api/v1/addActor 
+ headers={'User-Agent': 'python-requests/2.27.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '42'} 
+ body=b'{"name": "Hugo Weaving", "actorId": "HW1"}' 
+ </msg>
+<msg timestamp="20230814 17:26:59.752" level="INFO">PUT Response : url=http://localhost:8080/api/v1/addActor 
+ status=200, reason=OK 
+ headers={'Date': 'Tue, 15 Aug 2023 00:26:59 GMT', 'Content-length': '11'} 
+ body=Actor added 
+ </msg>
+<msg timestamp="20230814 17:26:59.753" level="INFO">${actor_hugo_weaving_resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230814 17:26:59.636" endtime="20230814 17:26:59.753"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${movie_few_good_men}</var>
+<arg>name=A Few Good Men</arg>
+<arg>movieId=TFGB1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230814 17:26:59.756" level="INFO">${movie_few_good_men} = {'name': 'A Few Good Men', 'movieId': 'TFGB1'}</msg>
+<status status="PASS" starttime="20230814 17:26:59.755" endtime="20230814 17:26:59.756"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${movie_the_devils_advocate}</var>
+<arg>name=The Devil's Advocate</arg>
+<arg>movieId=TDAT1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230814 17:26:59.759" level="INFO">${movie_the_devils_advocate} = {'name': "The Devil's Advocate", 'movieId': 'TDAT1'}</msg>
+<status status="PASS" starttime="20230814 17:26:59.758" endtime="20230814 17:26:59.759"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${movie_the_matrix}</var>
+<arg>name=The Matrix</arg>
+<arg>movieId=MTRX1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230814 17:26:59.763" level="INFO">${movie_the_matrix} = {'name': 'The Matrix', 'movieId': 'MTRX1'}</msg>
+<status status="PASS" starttime="20230814 17:26:59.762" endtime="20230814 17:26:59.763"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${movie_few_good_men_resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addMovie</arg>
+<arg>json=${movie_few_good_men}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<msg timestamp="20230814 17:26:59.887" level="INFO">PUT Request : url=http://localhost:8080/api/v1/addMovie 
+ path_url=/api/v1/addMovie 
+ headers={'User-Agent': 'python-requests/2.27.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '46'} 
+ body=b'{"name": "A Few Good Men", "movieId": "TFGB1"}' 
+ </msg>
+<msg timestamp="20230814 17:26:59.888" level="INFO">PUT Response : url=http://localhost:8080/api/v1/addMovie 
+ status=200, reason=OK 
+ headers={'Date': 'Tue, 15 Aug 2023 00:26:59 GMT', 'Content-length': '12'} 
+ body=Movies added 
+ </msg>
+<msg timestamp="20230814 17:26:59.888" level="INFO">${movie_few_good_men_resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230814 17:26:59.766" endtime="20230814 17:26:59.888"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${movie_the_devils_advocate_resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addMovie</arg>
+<arg>json=${movie_the_devils_advocate}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<msg timestamp="20230814 17:27:00.026" level="INFO">PUT Request : url=http://localhost:8080/api/v1/addMovie 
+ path_url=/api/v1/addMovie 
+ headers={'User-Agent': 'python-requests/2.27.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '52'} 
+ body=b'{"name": "The Devil\'s Advocate", "movieId": "TDAT1"}' 
+ </msg>
+<msg timestamp="20230814 17:27:00.027" level="INFO">PUT Response : url=http://localhost:8080/api/v1/addMovie 
+ status=200, reason=OK 
+ headers={'Date': 'Tue, 15 Aug 2023 00:27:00 GMT', 'Content-length': '12'} 
+ body=Movies added 
+ </msg>
+<msg timestamp="20230814 17:27:00.028" level="INFO">${movie_the_devils_advocate_resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230814 17:26:59.892" endtime="20230814 17:27:00.028"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${movie_the_matrix_resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addMovie</arg>
+<arg>json=${movie_the_matrix}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<msg timestamp="20230814 17:27:00.175" level="INFO">PUT Request : url=http://localhost:8080/api/v1/addMovie 
+ path_url=/api/v1/addMovie 
+ headers={'User-Agent': 'python-requests/2.27.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '42'} 
+ body=b'{"name": "The Matrix", "movieId": "MTRX1"}' 
+ </msg>
+<msg timestamp="20230814 17:27:00.176" level="INFO">PUT Response : url=http://localhost:8080/api/v1/addMovie 
+ status=200, reason=OK 
+ headers={'Date': 'Tue, 15 Aug 2023 00:27:00 GMT', 'Content-length': '12'} 
+ body=Movies added 
+ </msg>
+<msg timestamp="20230814 17:27:00.177" level="INFO">${movie_the_matrix_resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230814 17:27:00.053" endtime="20230814 17:27:00.177"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${kevin_bacon_few_good_men_relationship_data}</var>
+<arg>actorId=nm0000102</arg>
+<arg>movieId=TFGB1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230814 17:27:00.182" level="INFO">${kevin_bacon_few_good_men_relationship_data} = {'actorId': 'nm0000102', 'movieId': 'TFGB1'}</msg>
+<status status="PASS" starttime="20230814 17:27:00.181" endtime="20230814 17:27:00.182"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${al_pacino_few_good_men_relationship_data}</var>
+<arg>actorId=AP1</arg>
+<arg>movieId=TFGB1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230814 17:27:00.186" level="INFO">${al_pacino_few_good_men_relationship_data} = {'actorId': 'AP1', 'movieId': 'TFGB1'}</msg>
+<status status="PASS" starttime="20230814 17:27:00.185" endtime="20230814 17:27:00.186"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${al_pacino_the_devils_advocate_relationship_data}</var>
+<arg>actorId=AP1</arg>
+<arg>movieId=TDAT1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230814 17:27:00.188" level="INFO">${al_pacino_the_devils_advocate_relationship_data} = {'actorId': 'AP1', 'movieId': 'TDAT1'}</msg>
+<status status="PASS" starttime="20230814 17:27:00.188" endtime="20230814 17:27:00.189"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${keanu_reeves_the_devils_advocate_relationship_data}</var>
+<arg>actorId=KR1</arg>
+<arg>movieId=TDAT1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230814 17:27:00.189" level="INFO">${keanu_reeves_the_devils_advocate_relationship_data} = {'actorId': 'KR1', 'movieId': 'TDAT1'}</msg>
+<status status="PASS" starttime="20230814 17:27:00.189" endtime="20230814 17:27:00.189"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${keanu_reeves_the_matrix_relationship_data}</var>
+<arg>actorId=KR1</arg>
+<arg>movieId=MTRX1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230814 17:27:00.192" level="INFO">${keanu_reeves_the_matrix_relationship_data} = {'actorId': 'KR1', 'movieId': 'MTRX1'}</msg>
+<status status="PASS" starttime="20230814 17:27:00.191" endtime="20230814 17:27:00.192"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${hugo_weaving_the_matrix_relationship_data}</var>
+<arg>actorId=HW1</arg>
+<arg>movieId=MTRX1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230814 17:27:00.196" level="INFO">${hugo_weaving_the_matrix_relationship_data} = {'actorId': 'HW1', 'movieId': 'MTRX1'}</msg>
+<status status="PASS" starttime="20230814 17:27:00.194" endtime="20230814 17:27:00.196"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${kevin_bacon_few_good_men_relationship_resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addRelationship</arg>
+<arg>json=${kevin_bacon_few_good_men_relationship_data}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<msg timestamp="20230814 17:27:00.336" level="INFO">PUT Request : url=http://localhost:8080/api/v1/addRelationship 
+ path_url=/api/v1/addRelationship 
+ headers={'User-Agent': 'python-requests/2.27.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '44'} 
+ body=b'{"actorId": "nm0000102", "movieId": "TFGB1"}' 
+ </msg>
+<msg timestamp="20230814 17:27:00.336" level="INFO">PUT Response : url=http://localhost:8080/api/v1/addRelationship 
+ status=200, reason=OK 
+ headers={'Date': 'Tue, 15 Aug 2023 00:27:00 GMT', 'Content-length': '18'} 
+ body=relationship added 
+ </msg>
+<msg timestamp="20230814 17:27:00.337" level="INFO">${kevin_bacon_few_good_men_relationship_resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230814 17:27:00.201" endtime="20230814 17:27:00.337"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${al_pacino_few_good_men_relationship_resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addRelationship</arg>
+<arg>json=${al_pacino_few_good_men_relationship_data}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<msg timestamp="20230814 17:27:00.470" level="INFO">PUT Request : url=http://localhost:8080/api/v1/addRelationship 
+ path_url=/api/v1/addRelationship 
+ headers={'User-Agent': 'python-requests/2.27.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '38'} 
+ body=b'{"actorId": "AP1", "movieId": "TFGB1"}' 
+ </msg>
+<msg timestamp="20230814 17:27:00.470" level="INFO">PUT Response : url=http://localhost:8080/api/v1/addRelationship 
+ status=200, reason=OK 
+ headers={'Date': 'Tue, 15 Aug 2023 00:27:00 GMT', 'Content-length': '18'} 
+ body=relationship added 
+ </msg>
+<msg timestamp="20230814 17:27:00.471" level="INFO">${al_pacino_few_good_men_relationship_resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230814 17:27:00.338" endtime="20230814 17:27:00.471"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${al_pacino_the_devils_advocate_relationship_resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addRelationship</arg>
+<arg>json=${al_pacino_the_devils_advocate_relationship_data}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<msg timestamp="20230814 17:27:00.639" level="INFO">PUT Request : url=http://localhost:8080/api/v1/addRelationship 
+ path_url=/api/v1/addRelationship 
+ headers={'User-Agent': 'python-requests/2.27.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '38'} 
+ body=b'{"actorId": "AP1", "movieId": "TDAT1"}' 
+ </msg>
+<msg timestamp="20230814 17:27:00.639" level="INFO">PUT Response : url=http://localhost:8080/api/v1/addRelationship 
+ status=200, reason=OK 
+ headers={'Date': 'Tue, 15 Aug 2023 00:27:00 GMT', 'Content-length': '18'} 
+ body=relationship added 
+ </msg>
+<msg timestamp="20230814 17:27:00.640" level="INFO">${al_pacino_the_devils_advocate_relationship_resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230814 17:27:00.472" endtime="20230814 17:27:00.641"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${keanu_reeves_the_devils_advocate_relationship_resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addRelationship</arg>
+<arg>json=${keanu_reeves_the_devils_advocate_relationship_data}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<msg timestamp="20230814 17:27:00.768" level="INFO">PUT Request : url=http://localhost:8080/api/v1/addRelationship 
+ path_url=/api/v1/addRelationship 
+ headers={'User-Agent': 'python-requests/2.27.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '38'} 
+ body=b'{"actorId": "KR1", "movieId": "TDAT1"}' 
+ </msg>
+<msg timestamp="20230814 17:27:00.768" level="INFO">PUT Response : url=http://localhost:8080/api/v1/addRelationship 
+ status=200, reason=OK 
+ headers={'Date': 'Tue, 15 Aug 2023 00:27:00 GMT', 'Content-length': '18'} 
+ body=relationship added 
+ </msg>
+<msg timestamp="20230814 17:27:00.769" level="INFO">${keanu_reeves_the_devils_advocate_relationship_resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230814 17:27:00.645" endtime="20230814 17:27:00.769"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${keanu_reeves_the_matrix_relationship_resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addRelationship</arg>
+<arg>json=${keanu_reeves_the_matrix_relationship_data}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<msg timestamp="20230814 17:27:00.888" level="INFO">PUT Request : url=http://localhost:8080/api/v1/addRelationship 
+ path_url=/api/v1/addRelationship 
+ headers={'User-Agent': 'python-requests/2.27.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '38'} 
+ body=b'{"actorId": "KR1", "movieId": "MTRX1"}' 
+ </msg>
+<msg timestamp="20230814 17:27:00.889" level="INFO">PUT Response : url=http://localhost:8080/api/v1/addRelationship 
+ status=200, reason=OK 
+ headers={'Date': 'Tue, 15 Aug 2023 00:27:00 GMT', 'Content-length': '18'} 
+ body=relationship added 
+ </msg>
+<msg timestamp="20230814 17:27:00.889" level="INFO">${keanu_reeves_the_matrix_relationship_resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230814 17:27:00.770" endtime="20230814 17:27:00.890"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${hugo_weaving_the_matrix_relationship_resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addRelationship</arg>
+<arg>json=${hugo_weaving_the_matrix_relationship_data}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<msg timestamp="20230814 17:27:01.005" level="INFO">PUT Request : url=http://localhost:8080/api/v1/addRelationship 
+ path_url=/api/v1/addRelationship 
+ headers={'User-Agent': 'python-requests/2.27.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '38'} 
+ body=b'{"actorId": "HW1", "movieId": "MTRX1"}' 
+ </msg>
+<msg timestamp="20230814 17:27:01.006" level="INFO">PUT Response : url=http://localhost:8080/api/v1/addRelationship 
+ status=200, reason=OK 
+ headers={'Date': 'Tue, 15 Aug 2023 00:27:01 GMT', 'Content-length': '18'} 
+ body=relationship added 
+ </msg>
+<msg timestamp="20230814 17:27:01.006" level="INFO">${hugo_weaving_the_matrix_relationship_resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230814 17:27:00.894" endtime="20230814 17:27:01.006"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${hugo_weaving_actor_id}</var>
+<arg>HW1</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20230814 17:27:01.012" level="INFO">${hugo_weaving_actor_id} = HW1</msg>
+<status status="PASS" starttime="20230814 17:27:01.008" endtime="20230814 17:27:01.012"/>
+</kw>
+<kw name="GET On Session" library="RequestsLibrary">
+<var>${compute_bacon_number_resp}</var>
+<arg>localhost</arg>
+<arg>url=/api/v1/computeBaconNumber?actorId=${hugo_weaving_actor_id}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<msg timestamp="20230814 17:27:01.169" level="INFO">GET Request : url=http://localhost:8080/api/v1/computeBaconNumber?actorId=HW1 
+ path_url=/api/v1/computeBaconNumber?actorId=HW1 
+ headers={'User-Agent': 'python-requests/2.27.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json'} 
+ body=None 
+ </msg>
+<msg timestamp="20230814 17:27:01.170" level="INFO">GET Response : url=http://localhost:8080/api/v1/computeBaconNumber?actorId=HW1 
+ status=200, reason=OK 
+ headers={'Date': 'Tue, 15 Aug 2023 00:27:01 GMT', 'Content-length': '17'} 
+ body={"baconNumber":3} 
+ </msg>
+<msg timestamp="20230814 17:27:01.170" level="INFO">${compute_bacon_number_resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230814 17:27:01.017" endtime="20230814 17:27:01.170"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${bacon_number}</var>
+<arg>${compute_bacon_number_resp.json()['baconNumber']}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20230814 17:27:01.177" level="INFO">${bacon_number} = 3</msg>
+<status status="PASS" starttime="20230814 17:27:01.172" endtime="20230814 17:27:01.177"/>
+</kw>
+<kw name="Should Be Equal As Integers" library="BuiltIn">
+<arg>${bacon_number}</arg>
+<arg>3</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<msg timestamp="20230814 17:27:01.181" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<status status="PASS" starttime="20230814 17:27:01.178" endtime="20230814 17:27:01.182"/>
+</kw>
+<timeout value="30 seconds"/>
+<status status="PASS" starttime="20230814 17:26:59.322" endtime="20230814 17:27:01.183"/>
+</test>
+<test id="s1-t14" name="computeBaconNumberFail" line="249">
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${headers}</var>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230814 17:27:01.187" level="INFO">${headers} = {'Content-Type': 'application/json'}</msg>
+<status status="PASS" starttime="20230814 17:27:01.186" endtime="20230814 17:27:01.187"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${actor_kevin_bacon}</var>
+<arg>name=Kevin Bacon</arg>
+<arg>actorId=nm0000102</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230814 17:27:01.189" level="INFO">${actor_kevin_bacon} = {'name': 'Kevin Bacon', 'actorId': 'nm0000102'}</msg>
+<status status="PASS" starttime="20230814 17:27:01.188" endtime="20230814 17:27:01.190"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${actor_keanu_reeves}</var>
+<arg>name=Keanu Reeves</arg>
+<arg>actorId=KR1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230814 17:27:01.194" level="INFO">${actor_keanu_reeves} = {'name': 'Keanu Reeves', 'actorId': 'KR1'}</msg>
+<status status="PASS" starttime="20230814 17:27:01.191" endtime="20230814 17:27:01.194"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${actor_al_pacino}</var>
+<arg>name=Al Pacino</arg>
+<arg>actorId=AP1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230814 17:27:01.197" level="INFO">${actor_al_pacino} = {'name': 'Al Pacino', 'actorId': 'AP1'}</msg>
+<status status="PASS" starttime="20230814 17:27:01.195" endtime="20230814 17:27:01.197"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${actor_hugo_weaving}</var>
+<arg>name=Hugo Weaving</arg>
+<arg>actorId=HW1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230814 17:27:01.199" level="INFO">${actor_hugo_weaving} = {'name': 'Hugo Weaving', 'actorId': 'HW1'}</msg>
+<status status="PASS" starttime="20230814 17:27:01.198" endtime="20230814 17:27:01.199"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${actor_kevin_bacon_resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addActor</arg>
+<arg>json=${actor_kevin_bacon}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<msg timestamp="20230814 17:27:01.284" level="INFO">PUT Request : url=http://localhost:8080/api/v1/addActor 
+ path_url=/api/v1/addActor 
+ headers={'User-Agent': 'python-requests/2.27.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '47'} 
+ body=b'{"name": "Kevin Bacon", "actorId": "nm0000102"}' 
+ </msg>
+<msg timestamp="20230814 17:27:01.284" level="INFO">PUT Response : url=http://localhost:8080/api/v1/addActor 
+ status=400, reason=Bad Request 
+ headers={'Date': 'Tue, 15 Aug 2023 00:27:01 GMT', 'Content-length': '21'} 
+ body=edge cased, not added 
+ </msg>
+<msg timestamp="20230814 17:27:01.285" level="FAIL">Url: http://localhost:8080/api/v1/addActor Expected status: 400 != 200</msg>
+<status status="FAIL" starttime="20230814 17:27:01.200" endtime="20230814 17:27:01.286"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${actor_keanu_reeves_resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addActor</arg>
+<arg>json=${actor_keanu_reeves}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.288" endtime="20230814 17:27:01.288"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${actor_al_pacino_resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addActor</arg>
+<arg>json=${actor_al_pacino}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.290" endtime="20230814 17:27:01.290"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${actor_hugo_weaving_resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addActor</arg>
+<arg>json=${actor_hugo_weaving}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.293" endtime="20230814 17:27:01.293"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${movie_few_good_men}</var>
+<arg>name=A Few Good Men</arg>
+<arg>movieId=TFGB1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.297" endtime="20230814 17:27:01.297"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${movie_the_devils_advocate}</var>
+<arg>name=The Devil's Advocate</arg>
+<arg>movieId=TDAT1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.298" endtime="20230814 17:27:01.298"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${movie_the_matrix}</var>
+<arg>name=The Matrix</arg>
+<arg>movieId=MTRX1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.299" endtime="20230814 17:27:01.299"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${movie_few_good_men_resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addMovie</arg>
+<arg>json=${movie_few_good_men}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.300" endtime="20230814 17:27:01.300"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${movie_the_devils_advocate_resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addMovie</arg>
+<arg>json=${movie_the_devils_advocate}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.301" endtime="20230814 17:27:01.301"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${movie_the_matrix_resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addMovie</arg>
+<arg>json=${movie_the_matrix}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.302" endtime="20230814 17:27:01.302"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${kevin_bacon_few_good_men_relationship_data}</var>
+<arg>actorId=nm0000102</arg>
+<arg>movieId=TFGB1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.303" endtime="20230814 17:27:01.303"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${al_pacino_few_good_men_relationship_data}</var>
+<arg>actorId=AP1</arg>
+<arg>movieId=TFGB1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.304" endtime="20230814 17:27:01.304"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${al_pacino_the_devils_advocate_relationship_data}</var>
+<arg>actorId=AP1</arg>
+<arg>movieId=TDAT1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.308" endtime="20230814 17:27:01.309"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${keanu_reeves_the_devils_advocate_relationship_data}</var>
+<arg>actorId=KR1</arg>
+<arg>movieId=TDAT1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.310" endtime="20230814 17:27:01.310"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${keanu_reeves_the_matrix_relationship_data}</var>
+<arg>actorId=KR1</arg>
+<arg>movieId=MTRX1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.312" endtime="20230814 17:27:01.312"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${hugo_weaving_the_matrix_relationship_data}</var>
+<arg>actorId=HW1</arg>
+<arg>movieId=MTRX1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.313" endtime="20230814 17:27:01.313"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${kevin_bacon_few_good_men_relationship_resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addRelationship</arg>
+<arg>json=${kevin_bacon_few_good_men_relationship_data}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.315" endtime="20230814 17:27:01.315"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${al_pacino_few_good_men_relationship_resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addRelationship</arg>
+<arg>json=${al_pacino_few_good_men_relationship_data}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.316" endtime="20230814 17:27:01.316"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${al_pacino_the_devils_advocate_relationship_resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addRelationship</arg>
+<arg>json=${al_pacino_the_devils_advocate_relationship_data}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.317" endtime="20230814 17:27:01.317"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${keanu_reeves_the_devils_advocate_relationship_resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addRelationship</arg>
+<arg>json=${keanu_reeves_the_devils_advocate_relationship_data}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.318" endtime="20230814 17:27:01.319"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${keanu_reeves_the_matrix_relationship_resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addRelationship</arg>
+<arg>json=${keanu_reeves_the_matrix_relationship_data}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.320" endtime="20230814 17:27:01.321"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${hugo_weaving_the_matrix_relationship_resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addRelationship</arg>
+<arg>json=${hugo_weaving_the_matrix_relationship_data}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.323" endtime="20230814 17:27:01.323"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${hugo_weaving_actor_id}</var>
+<arg>HW11</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.326" endtime="20230814 17:27:01.326"/>
+</kw>
+<kw name="GET On Session" library="RequestsLibrary">
+<var>${compute_bacon_number_resp}</var>
+<arg>localhost</arg>
+<arg>url=/api/v1/computeBaconNumber?actorId=${hugo_weaving_actor_id}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=404</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.328" endtime="20230814 17:27:01.328"/>
+</kw>
+<timeout value="30 seconds"/>
+<status status="FAIL" starttime="20230814 17:27:01.185" endtime="20230814 17:27:01.329">Url: http://localhost:8080/api/v1/addActor Expected status: 400 != 200</status>
+</test>
+<test id="s1-t15" name="computeBaconPathPass" line="294">
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${headers}</var>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230814 17:27:01.338" level="INFO">${headers} = {'Content-Type': 'application/json'}</msg>
+<status status="PASS" starttime="20230814 17:27:01.337" endtime="20230814 17:27:01.338"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${actor_kevin_bacon}</var>
+<arg>name=Kevin Bacon</arg>
+<arg>actorId=nm0000102</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230814 17:27:01.343" level="INFO">${actor_kevin_bacon} = {'name': 'Kevin Bacon', 'actorId': 'nm0000102'}</msg>
+<status status="PASS" starttime="20230814 17:27:01.339" endtime="20230814 17:27:01.343"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${actor_keanu_reeves}</var>
+<arg>name=Keanu Reeves</arg>
+<arg>actorId=KR1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230814 17:27:01.347" level="INFO">${actor_keanu_reeves} = {'name': 'Keanu Reeves', 'actorId': 'KR1'}</msg>
+<status status="PASS" starttime="20230814 17:27:01.346" endtime="20230814 17:27:01.347"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${actor_al_pacino}</var>
+<arg>name=Al Pacino</arg>
+<arg>actorId=AP1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230814 17:27:01.350" level="INFO">${actor_al_pacino} = {'name': 'Al Pacino', 'actorId': 'AP1'}</msg>
+<status status="PASS" starttime="20230814 17:27:01.349" endtime="20230814 17:27:01.350"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${actor_hugo_weaving}</var>
+<arg>name=Hugo Weaving</arg>
+<arg>actorId=HW1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230814 17:27:01.368" level="INFO">${actor_hugo_weaving} = {'name': 'Hugo Weaving', 'actorId': 'HW1'}</msg>
+<status status="PASS" starttime="20230814 17:27:01.365" endtime="20230814 17:27:01.368"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${actor_kevin_bacon_resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addActor</arg>
+<arg>json=${actor_kevin_bacon}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<msg timestamp="20230814 17:27:01.465" level="INFO">PUT Request : url=http://localhost:8080/api/v1/addActor 
+ path_url=/api/v1/addActor 
+ headers={'User-Agent': 'python-requests/2.27.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '47'} 
+ body=b'{"name": "Kevin Bacon", "actorId": "nm0000102"}' 
+ </msg>
+<msg timestamp="20230814 17:27:01.465" level="INFO">PUT Response : url=http://localhost:8080/api/v1/addActor 
+ status=400, reason=Bad Request 
+ headers={'Date': 'Tue, 15 Aug 2023 00:27:01 GMT', 'Content-length': '21'} 
+ body=edge cased, not added 
+ </msg>
+<msg timestamp="20230814 17:27:01.466" level="FAIL">Url: http://localhost:8080/api/v1/addActor Expected status: 400 != 200</msg>
+<status status="FAIL" starttime="20230814 17:27:01.373" endtime="20230814 17:27:01.467"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${actor_keanu_reeves_resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addActor</arg>
+<arg>json=${actor_keanu_reeves}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.469" endtime="20230814 17:27:01.469"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${actor_al_pacino_resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addActor</arg>
+<arg>json=${actor_al_pacino}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.470" endtime="20230814 17:27:01.470"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${actor_hugo_weaving_resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addActor</arg>
+<arg>json=${actor_hugo_weaving}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.470" endtime="20230814 17:27:01.471"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${movie_few_good_men}</var>
+<arg>name=A Few Good Men</arg>
+<arg>movieId=TFGB1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.472" endtime="20230814 17:27:01.472"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${movie_the_devils_advocate}</var>
+<arg>name=The Devil's Advocate</arg>
+<arg>movieId=TDAT1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.473" endtime="20230814 17:27:01.473"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${movie_the_matrix}</var>
+<arg>name=The Matrix</arg>
+<arg>movieId=MTRX1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.474" endtime="20230814 17:27:01.474"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${movie_few_good_men_resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addMovie</arg>
+<arg>json=${movie_few_good_men}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.474" endtime="20230814 17:27:01.475"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${movie_the_devils_advocate_resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addMovie</arg>
+<arg>json=${movie_the_devils_advocate}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.476" endtime="20230814 17:27:01.476"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${movie_the_matrix_resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addMovie</arg>
+<arg>json=${movie_the_matrix}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.478" endtime="20230814 17:27:01.479"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${kevin_bacon_few_good_men_relationship_data}</var>
+<arg>actorId=nm0000102</arg>
+<arg>movieId=TFGB1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.481" endtime="20230814 17:27:01.481"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${al_pacino_few_good_men_relationship_data}</var>
+<arg>actorId=AP1</arg>
+<arg>movieId=TFGB1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.483" endtime="20230814 17:27:01.483"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${al_pacino_the_devils_advocate_relationship_data}</var>
+<arg>actorId=AP1</arg>
+<arg>movieId=TDAT1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.485" endtime="20230814 17:27:01.485"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${keanu_reeves_the_devils_advocate_relationship_data}</var>
+<arg>actorId=KR1</arg>
+<arg>movieId=TDAT1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.486" endtime="20230814 17:27:01.486"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${keanu_reeves_the_matrix_relationship_data}</var>
+<arg>actorId=KR1</arg>
+<arg>movieId=MTRX1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.487" endtime="20230814 17:27:01.488"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${hugo_weaving_the_matrix_relationship_data}</var>
+<arg>actorId=HW1</arg>
+<arg>movieId=MTRX1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.489" endtime="20230814 17:27:01.489"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${kevin_bacon_few_good_men_relationship_resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addRelationship</arg>
+<arg>json=${kevin_bacon_few_good_men_relationship_data}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.490" endtime="20230814 17:27:01.490"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${al_pacino_few_good_men_relationship_resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addRelationship</arg>
+<arg>json=${al_pacino_few_good_men_relationship_data}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.491" endtime="20230814 17:27:01.491"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${al_pacino_the_devils_advocate_relationship_resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addRelationship</arg>
+<arg>json=${al_pacino_the_devils_advocate_relationship_data}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.492" endtime="20230814 17:27:01.492"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${keanu_reeves_the_devils_advocate_relationship_resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addRelationship</arg>
+<arg>json=${keanu_reeves_the_devils_advocate_relationship_data}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.493" endtime="20230814 17:27:01.493"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${keanu_reeves_the_matrix_relationship_resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addRelationship</arg>
+<arg>json=${keanu_reeves_the_matrix_relationship_data}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.496" endtime="20230814 17:27:01.497"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${hugo_weaving_the_matrix_relationship_resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addRelationship</arg>
+<arg>json=${hugo_weaving_the_matrix_relationship_data}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.498" endtime="20230814 17:27:01.498"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${hugo_weaving_actor_id}</var>
+<arg>HW1</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.499" endtime="20230814 17:27:01.499"/>
+</kw>
+<kw name="GET On Session" library="RequestsLibrary">
+<var>${compute_bacon_path_resp}</var>
+<arg>localhost</arg>
+<arg>url=/api/v1/computeBaconPath?actorId=${hugo_weaving_actor_id}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.500" endtime="20230814 17:27:01.500"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${compute_bacon_path_resp.json()}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.501" endtime="20230814 17:27:01.501"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${bacon_path}</var>
+<arg>${compute_bacon_path_resp.json()['baconPath']}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.502" endtime="20230814 17:27:01.502"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${bacon_path}</arg>
+<arg>['HW1', 'MTRX1', 'KR1', 'TDAT1', 'AP1', 'TFGB1', 'nm0000102']</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.504" endtime="20230814 17:27:01.504"/>
+</kw>
+<timeout value="30 seconds"/>
+<status status="FAIL" starttime="20230814 17:27:01.334" endtime="20230814 17:27:01.505">Url: http://localhost:8080/api/v1/addActor Expected status: 400 != 200</status>
+</test>
+<test id="s1-t16" name="computeBaconPathFail" line="342">
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${headers}</var>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230814 17:27:01.516" level="INFO">${headers} = {'Content-Type': 'application/json'}</msg>
+<status status="PASS" starttime="20230814 17:27:01.515" endtime="20230814 17:27:01.516"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${actor_kevin_bacon}</var>
+<arg>name=Kevin Bacon</arg>
+<arg>actorId=nm0000102</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230814 17:27:01.518" level="INFO">${actor_kevin_bacon} = {'name': 'Kevin Bacon', 'actorId': 'nm0000102'}</msg>
+<status status="PASS" starttime="20230814 17:27:01.517" endtime="20230814 17:27:01.518"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${actor_keanu_reeves}</var>
+<arg>name=Keanu Reeves</arg>
+<arg>actorId=KR1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230814 17:27:01.520" level="INFO">${actor_keanu_reeves} = {'name': 'Keanu Reeves', 'actorId': 'KR1'}</msg>
+<status status="PASS" starttime="20230814 17:27:01.519" endtime="20230814 17:27:01.520"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${actor_al_pacino}</var>
+<arg>name=Al Pacino</arg>
+<arg>actorId=AP1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230814 17:27:01.527" level="INFO">${actor_al_pacino} = {'name': 'Al Pacino', 'actorId': 'AP1'}</msg>
+<status status="PASS" starttime="20230814 17:27:01.524" endtime="20230814 17:27:01.527"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${actor_hugo_weaving}</var>
+<arg>name=Hugo Weaving</arg>
+<arg>actorId=HW1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230814 17:27:01.534" level="INFO">${actor_hugo_weaving} = {'name': 'Hugo Weaving', 'actorId': 'HW1'}</msg>
+<status status="PASS" starttime="20230814 17:27:01.532" endtime="20230814 17:27:01.534"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${actor_kevin_bacon_resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addActor</arg>
+<arg>json=${actor_kevin_bacon}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<msg timestamp="20230814 17:27:01.612" level="INFO">PUT Request : url=http://localhost:8080/api/v1/addActor 
+ path_url=/api/v1/addActor 
+ headers={'User-Agent': 'python-requests/2.27.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '47'} 
+ body=b'{"name": "Kevin Bacon", "actorId": "nm0000102"}' 
+ </msg>
+<msg timestamp="20230814 17:27:01.612" level="INFO">PUT Response : url=http://localhost:8080/api/v1/addActor 
+ status=400, reason=Bad Request 
+ headers={'Date': 'Tue, 15 Aug 2023 00:27:01 GMT', 'Content-length': '21'} 
+ body=edge cased, not added 
+ </msg>
+<msg timestamp="20230814 17:27:01.613" level="FAIL">Url: http://localhost:8080/api/v1/addActor Expected status: 400 != 200</msg>
+<status status="FAIL" starttime="20230814 17:27:01.535" endtime="20230814 17:27:01.614"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${actor_keanu_reeves_resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addActor</arg>
+<arg>json=${actor_keanu_reeves}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.614" endtime="20230814 17:27:01.615"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${actor_al_pacino_resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addActor</arg>
+<arg>json=${actor_al_pacino}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.615" endtime="20230814 17:27:01.616"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${actor_hugo_weaving_resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addActor</arg>
+<arg>json=${actor_hugo_weaving}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.616" endtime="20230814 17:27:01.617"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${movie_few_good_men}</var>
+<arg>name=A Few Good Men</arg>
+<arg>movieId=TFGB1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.618" endtime="20230814 17:27:01.618"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${movie_the_devils_advocate}</var>
+<arg>name=The Devil's Advocate</arg>
+<arg>movieId=TDAT1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.618" endtime="20230814 17:27:01.618"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${movie_the_matrix}</var>
+<arg>name=The Matrix</arg>
+<arg>movieId=MTRX1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.619" endtime="20230814 17:27:01.620"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${movie_few_good_men_resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addMovie</arg>
+<arg>json=${movie_few_good_men}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.621" endtime="20230814 17:27:01.621"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${movie_the_devils_advocate_resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addMovie</arg>
+<arg>json=${movie_the_devils_advocate}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.622" endtime="20230814 17:27:01.622"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${movie_the_matrix_resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addMovie</arg>
+<arg>json=${movie_the_matrix}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.623" endtime="20230814 17:27:01.623"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${kevin_bacon_few_good_men_relationship_data}</var>
+<arg>actorId=nm0000102</arg>
+<arg>movieId=TFGB1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.624" endtime="20230814 17:27:01.624"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${al_pacino_few_good_men_relationship_data}</var>
+<arg>actorId=AP1</arg>
+<arg>movieId=TFGB1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.625" endtime="20230814 17:27:01.625"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${al_pacino_the_devils_advocate_relationship_data}</var>
+<arg>actorId=AP1</arg>
+<arg>movieId=TDAT1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.627" endtime="20230814 17:27:01.628"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${keanu_reeves_the_devils_advocate_relationship_data}</var>
+<arg>actorId=KR1</arg>
+<arg>movieId=TDAT1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.629" endtime="20230814 17:27:01.629"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${keanu_reeves_the_matrix_relationship_data}</var>
+<arg>actorId=KR1</arg>
+<arg>movieId=MTRX1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.633" endtime="20230814 17:27:01.633"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${hugo_weaving_the_matrix_relationship_data}</var>
+<arg>actorId=HW1</arg>
+<arg>movieId=MTRX1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.635" endtime="20230814 17:27:01.635"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${kevin_bacon_few_good_men_relationship_resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addRelationship</arg>
+<arg>json=${kevin_bacon_few_good_men_relationship_data}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.636" endtime="20230814 17:27:01.636"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${al_pacino_few_good_men_relationship_resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addRelationship</arg>
+<arg>json=${al_pacino_few_good_men_relationship_data}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.638" endtime="20230814 17:27:01.639"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${al_pacino_the_devils_advocate_relationship_resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addRelationship</arg>
+<arg>json=${al_pacino_the_devils_advocate_relationship_data}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.639" endtime="20230814 17:27:01.640"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${keanu_reeves_the_devils_advocate_relationship_resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addRelationship</arg>
+<arg>json=${keanu_reeves_the_devils_advocate_relationship_data}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.642" endtime="20230814 17:27:01.642"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${keanu_reeves_the_matrix_relationship_resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addRelationship</arg>
+<arg>json=${keanu_reeves_the_matrix_relationship_data}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.644" endtime="20230814 17:27:01.645"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${hugo_weaving_the_matrix_relationship_resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addRelationship</arg>
+<arg>json=${hugo_weaving_the_matrix_relationship_data}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.646" endtime="20230814 17:27:01.646"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${hugo_weaving_actor_id}</var>
+<arg>HW11</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.648" endtime="20230814 17:27:01.649"/>
+</kw>
+<kw name="GET On Session" library="RequestsLibrary">
+<var>${compute_bacon_path_resp}</var>
+<arg>localhost</arg>
+<arg>url=/api/v1/computeBaconPath?actorId=${hugo_weaving_actor_id}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=404</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.650" endtime="20230814 17:27:01.650"/>
+</kw>
+<timeout value="30 seconds"/>
+<status status="FAIL" starttime="20230814 17:27:01.510" endtime="20230814 17:27:01.651">Url: http://localhost:8080/api/v1/addActor Expected status: 400 != 200</status>
+</test>
+<test id="s1-t17" name="setRatingPass" line="385">
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${headers}</var>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230814 17:27:01.657" level="INFO">${headers} = {'Content-Type': 'application/json'}</msg>
+<status status="PASS" starttime="20230814 17:27:01.656" endtime="20230814 17:27:01.658"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${movie_data}</var>
+<arg>name=Cars</arg>
+<arg>movieId=CRS1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230814 17:27:01.661" level="INFO">${movie_data} = {'name': 'Cars', 'movieId': 'CRS1'}</msg>
+<status status="PASS" starttime="20230814 17:27:01.659" endtime="20230814 17:27:01.661"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${movie_resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addMovie</arg>
+<arg>json=${movie_data}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<msg timestamp="20230814 17:27:01.759" level="INFO">PUT Request : url=http://localhost:8080/api/v1/addMovie 
+ path_url=/api/v1/addMovie 
+ headers={'User-Agent': 'python-requests/2.27.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '35'} 
+ body=b'{"name": "Cars", "movieId": "CRS1"}' 
+ </msg>
+<msg timestamp="20230814 17:27:01.759" level="INFO">PUT Response : url=http://localhost:8080/api/v1/addMovie 
+ status=200, reason=OK 
+ headers={'Date': 'Tue, 15 Aug 2023 00:27:01 GMT', 'Content-length': '12'} 
+ body=Movies added 
+ </msg>
+<msg timestamp="20230814 17:27:01.760" level="INFO">${movie_resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230814 17:27:01.666" endtime="20230814 17:27:01.760"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${rating}</var>
+<arg>rating=4</arg>
+<arg>movieId=CRS1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230814 17:27:01.764" level="INFO">${rating} = {'rating': '4', 'movieId': 'CRS1'}</msg>
+<status status="PASS" starttime="20230814 17:27:01.762" endtime="20230814 17:27:01.764"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${rating_resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/setRating</arg>
+<arg>json=${rating}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<msg timestamp="20230814 17:27:01.860" level="INFO">PUT Request : url=http://localhost:8080/api/v1/setRating 
+ path_url=/api/v1/setRating 
+ headers={'User-Agent': 'python-requests/2.27.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '34'} 
+ body=b'{"rating": "4", "movieId": "CRS1"}' 
+ </msg>
+<msg timestamp="20230814 17:27:01.861" level="INFO">PUT Response : url=http://localhost:8080/api/v1/setRating 
+ status=200, reason=OK 
+ headers={'Date': 'Tue, 15 Aug 2023 00:27:01 GMT', 'Content-length': '12'} 
+ body=rating added 
+ </msg>
+<msg timestamp="20230814 17:27:01.862" level="INFO">${rating_resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230814 17:27:01.766" endtime="20230814 17:27:01.862"/>
+</kw>
+<timeout value="30 seconds"/>
+<status status="PASS" starttime="20230814 17:27:01.654" endtime="20230814 17:27:01.863"/>
+</test>
+<test id="s1-t18" name="setRatingFail" line="396">
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${headers}</var>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230814 17:27:01.868" level="INFO">${headers} = {'Content-Type': 'application/json'}</msg>
+<status status="PASS" starttime="20230814 17:27:01.867" endtime="20230814 17:27:01.868"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${movie_data}</var>
+<arg>name=Cars</arg>
+<arg>movieId=CRS1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230814 17:27:01.869" level="INFO">${movie_data} = {'name': 'Cars', 'movieId': 'CRS1'}</msg>
+<status status="PASS" starttime="20230814 17:27:01.869" endtime="20230814 17:27:01.869"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${movie_resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addMovie</arg>
+<arg>json=${movie_data}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<msg timestamp="20230814 17:27:01.943" level="INFO">PUT Request : url=http://localhost:8080/api/v1/addMovie 
+ path_url=/api/v1/addMovie 
+ headers={'User-Agent': 'python-requests/2.27.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '35'} 
+ body=b'{"name": "Cars", "movieId": "CRS1"}' 
+ </msg>
+<msg timestamp="20230814 17:27:01.943" level="INFO">PUT Response : url=http://localhost:8080/api/v1/addMovie 
+ status=400, reason=Bad Request 
+ headers={'Date': 'Tue, 15 Aug 2023 00:27:01 GMT', 'Content-length': '21'} 
+ body=edge cased, not added 
+ </msg>
+<msg timestamp="20230814 17:27:01.944" level="FAIL">Url: http://localhost:8080/api/v1/addMovie Expected status: 400 != 200</msg>
+<status status="FAIL" starttime="20230814 17:27:01.870" endtime="20230814 17:27:01.945"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${rating}</var>
+<arg>rating=4</arg>
+<arg>movieIdentification=CRS1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.946" endtime="20230814 17:27:01.947"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${rating_resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/setRating</arg>
+<arg>json=${rating}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=400</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:01.948" endtime="20230814 17:27:01.948"/>
+</kw>
+<timeout value="30 seconds"/>
+<status status="FAIL" starttime="20230814 17:27:01.866" endtime="20230814 17:27:01.949">Url: http://localhost:8080/api/v1/addMovie Expected status: 400 != 200</status>
+</test>
+<test id="s1-t19" name="getAbovePass" line="406">
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${headers}</var>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230814 17:27:01.954" level="INFO">${headers} = {'Content-Type': 'application/json'}</msg>
+<status status="PASS" starttime="20230814 17:27:01.954" endtime="20230814 17:27:01.954"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${movie_data1}</var>
+<arg>name=Cars</arg>
+<arg>movieId=CRS1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230814 17:27:01.956" level="INFO">${movie_data1} = {'name': 'Cars', 'movieId': 'CRS1'}</msg>
+<status status="PASS" starttime="20230814 17:27:01.955" endtime="20230814 17:27:01.956"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${movie_resp1}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addMovie</arg>
+<arg>json=${movie_data1}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<msg timestamp="20230814 17:27:02.029" level="INFO">PUT Request : url=http://localhost:8080/api/v1/addMovie 
+ path_url=/api/v1/addMovie 
+ headers={'User-Agent': 'python-requests/2.27.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '35'} 
+ body=b'{"name": "Cars", "movieId": "CRS1"}' 
+ </msg>
+<msg timestamp="20230814 17:27:02.029" level="INFO">PUT Response : url=http://localhost:8080/api/v1/addMovie 
+ status=400, reason=Bad Request 
+ headers={'Date': 'Tue, 15 Aug 2023 00:27:02 GMT', 'Content-length': '21'} 
+ body=edge cased, not added 
+ </msg>
+<msg timestamp="20230814 17:27:02.030" level="FAIL">Url: http://localhost:8080/api/v1/addMovie Expected status: 400 != 200</msg>
+<status status="FAIL" starttime="20230814 17:27:01.957" endtime="20230814 17:27:02.031"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${rating1}</var>
+<arg>rating=4</arg>
+<arg>movieId=CRS1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:02.032" endtime="20230814 17:27:02.033"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${movie_data2}</var>
+<arg>name=Toy Story</arg>
+<arg>movieId=TSY1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:02.033" endtime="20230814 17:27:02.034"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${movie_resp2}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addMovie</arg>
+<arg>json=${movie_data2}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:02.034" endtime="20230814 17:27:02.034"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${rating2}</var>
+<arg>rating=5</arg>
+<arg>movieId=TSY1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:02.035" endtime="20230814 17:27:02.035"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${rating_resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/setRating</arg>
+<arg>json=${rating1}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:02.036" endtime="20230814 17:27:02.036"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${rating_resp2}</var>
+<arg>localhost</arg>
+<arg>/api/v1/setRating</arg>
+<arg>json=${rating2}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:02.036" endtime="20230814 17:27:02.037"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${rating_to_see_all_movies_above}</var>
+<arg>3</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:02.037" endtime="20230814 17:27:02.038"/>
+</kw>
+<kw name="GET On Session" library="RequestsLibrary">
+<var>${all_movies_above_rating_resp}</var>
+<arg>localhost</arg>
+<arg>url=/api/v1/getAboveRating?rating=${rating_to_see_all_movies_above}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:02.038" endtime="20230814 17:27:02.038"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${list_of_all_movies_above}</var>
+<arg>${all_movies_above_rating_resp.json()['Movies above ${rating_to_see_all_movies_above}.0']}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:02.038" endtime="20230814 17:27:02.039"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${list_of_all_movies_above}</arg>
+<arg>['Cars', 'Toy Story']</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:02.039" endtime="20230814 17:27:02.039"/>
+</kw>
+<timeout value="30 seconds"/>
+<status status="FAIL" starttime="20230814 17:27:01.952" endtime="20230814 17:27:02.040">Url: http://localhost:8080/api/v1/addMovie Expected status: 400 != 200</status>
+</test>
+<test id="s1-t20" name="getAboveFail" line="428">
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${headers}</var>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230814 17:27:02.048" level="INFO">${headers} = {'Content-Type': 'application/json'}</msg>
+<status status="PASS" starttime="20230814 17:27:02.048" endtime="20230814 17:27:02.048"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${movie_data1}</var>
+<arg>name=Cars</arg>
+<arg>movieId=CRS1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230814 17:27:02.050" level="INFO">${movie_data1} = {'name': 'Cars', 'movieId': 'CRS1'}</msg>
+<status status="PASS" starttime="20230814 17:27:02.050" endtime="20230814 17:27:02.050"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${movie_resp1}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addMovie</arg>
+<arg>json=${movie_data1}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<msg timestamp="20230814 17:27:02.150" level="INFO">PUT Request : url=http://localhost:8080/api/v1/addMovie 
+ path_url=/api/v1/addMovie 
+ headers={'User-Agent': 'python-requests/2.27.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '35'} 
+ body=b'{"name": "Cars", "movieId": "CRS1"}' 
+ </msg>
+<msg timestamp="20230814 17:27:02.151" level="INFO">PUT Response : url=http://localhost:8080/api/v1/addMovie 
+ status=400, reason=Bad Request 
+ headers={'Date': 'Tue, 15 Aug 2023 00:27:02 GMT', 'Content-length': '21'} 
+ body=edge cased, not added 
+ </msg>
+<msg timestamp="20230814 17:27:02.152" level="FAIL">Url: http://localhost:8080/api/v1/addMovie Expected status: 400 != 200</msg>
+<status status="FAIL" starttime="20230814 17:27:02.051" endtime="20230814 17:27:02.153"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${rating1}</var>
+<arg>rating=4</arg>
+<arg>movieId=CRS1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:02.155" endtime="20230814 17:27:02.155"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${movie_data2}</var>
+<arg>name=Toy Story</arg>
+<arg>movieId=TSY1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:02.156" endtime="20230814 17:27:02.156"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${movie_resp2}</var>
+<arg>localhost</arg>
+<arg>/api/v1/addMovie</arg>
+<arg>json=${movie_data2}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:02.157" endtime="20230814 17:27:02.157"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${rating2}</var>
+<arg>rating=5</arg>
+<arg>movieId=TSY1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:02.158" endtime="20230814 17:27:02.158"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${rating_resp}</var>
+<arg>localhost</arg>
+<arg>/api/v1/setRating</arg>
+<arg>json=${rating1}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:02.159" endtime="20230814 17:27:02.160"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${rating_resp2}</var>
+<arg>localhost</arg>
+<arg>/api/v1/setRating</arg>
+<arg>json=${rating2}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:02.161" endtime="20230814 17:27:02.161"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${rating_to_see_all_movies_above}</var>
+<arg>6</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:02.163" endtime="20230814 17:27:02.164"/>
+</kw>
+<kw name="GET On Session" library="RequestsLibrary">
+<var>${all_movies_above_rating_resp}</var>
+<arg>localhost</arg>
+<arg>url=/api/v1/getAboveRating?rating=${rating_to_see_all_movies_above}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=400</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20230814 17:27:02.165" endtime="20230814 17:27:02.166"/>
+</kw>
+<timeout value="30 seconds"/>
+<status status="FAIL" starttime="20230814 17:27:02.046" endtime="20230814 17:27:02.168">Url: http://localhost:8080/api/v1/addMovie Expected status: 400 != 200</status>
+</test>
+<status status="FAIL" starttime="20230814 17:26:56.844" endtime="20230814 17:27:02.180"/>
+</suite>
+<statistics>
+<total>
+<stat pass="7" fail="13" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="7" fail="13" skip="0" id="s1" name="testBooks">testBooks</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
