@@ -40,8 +40,7 @@ public class Neo4j {
 	        	 Value param = Values.parameters("name", name, "id", Id);
 		            newsession.writeTransaction(tx -> tx.run(create, param));
 		            newsession.close();
-		            System.out.println("we create actor");
-		        	
+		           
 		            return true;
 	        }
 	        
@@ -75,7 +74,7 @@ public class Neo4j {
 	        
 	            newone.writeTransaction(tx -> tx.run(create, param));
 	            newone.close();
-	            System.out.println("we create movies");
+	           
 	        	
 	            return true;
 		}
@@ -94,7 +93,7 @@ public class Neo4j {
 	public boolean addRelationship(String actorid,String movieid) {
 		//System.out.println("At least");
 		
-		System.out.println(movieid+actorid);
+		
 		
 		Value params = Values.parameters("id1",actorid,"id2",movieid);
 		
@@ -109,7 +108,7 @@ public class Neo4j {
 				if(!exist) {
 					
 					try(Session ses = driver.session()){
-					System.out.println("I am here");
+					
 					ses.writeTransaction(tn -> tn.run(create,params));
 					ses.close();
 					
@@ -345,7 +344,6 @@ String querry="MATCH (n:Movie) WHERE n.movieId = $id RETURN n.name";
 		public boolean setRating(String movieId,double rating) {
 			
 			String another = "MATCH (n :Movie {movieId: $id}) SET n.rating = $rating";	
-			System.out.println(movieId+rating);
 			
 			try(Session se=driver.session()){
 				

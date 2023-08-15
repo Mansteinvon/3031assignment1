@@ -155,7 +155,7 @@ public  class Handler implements HttpHandler{
 		 
 		 else if(path.equals(re9)) {
 			 String Rating=map.get("rating");
-			 System.out.println(Rating);
+			
 			 if(Rating==null)
 				 result=false;
 			 else {
@@ -204,14 +204,14 @@ public void handlePut(HttpExchange request)throws IOException{
 	Neo4j neo4j=new Neo4j();
      
       String path = request.getRequestURI().getPath();
-      System.out.println(path);
+    
     
       
       try {
     	  JSONObject json = new JSONObject( Utils.getBody(request));
     	 
       if(path.equals(re1)) {
-    	  System.out.println("actor add going");
+    	 
     	  if(neo4j.addActor(json.getString("name"),json.getString("actorId")))
         		result=succeed(request,"Actor added");
       
@@ -262,7 +262,7 @@ public void handlePut(HttpExchange request)throws IOException{
       }
       else if(path.equals(reXI)) {
     	  
-    	  System.out.println("request nuke");
+    	 
     	  if(neo4j.nuke())
     		  result=succeed(request,"DB nuked");
       }
@@ -294,7 +294,7 @@ public void handlePut(HttpExchange request)throws IOException{
 
 public boolean succeed(HttpExchange request,String info)throws IOException{
 	
-	System.out.println("200");
+	
 	
 		
 		sendString(request,info,200);
@@ -309,7 +309,6 @@ public boolean succeed(HttpExchange request,String info)throws IOException{
 
 
 public void edgeCase(HttpExchange request,String info)throws IOException {
-	System.out.println("400");
 	
 		sendString(request,info,400);
 	}
